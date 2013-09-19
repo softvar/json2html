@@ -1,0 +1,18 @@
+# setup.py output
+build/
+dist/
+simplegist.egg-info/
+*.egg-info/
+
+# OS Files
+.DS_Store
+.DS_Store?
+*.pyc
+*~
+
+docs/_build
+docs/_static
+docs/_templates
+
+#pypi settings file
+.pyirc
