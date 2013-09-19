@@ -11,14 +11,14 @@ if sys.version_info[:2] < (2,6):
 setup(
     name = 'json2html',
     packages = ['json2html'],
-    version = '0.1',
+    version = '0.2',
     install_requires=required,
     description = 'JSON object to human readable HTML representation',
     long_description=open('README.rst').read(),
     author = 'Varun Malhotra',
     author_email = 'varun2902@gmail.com',
     url = 'https://github.com/softvar/json2html',
-    download_url = 'https://github.com/softvar/json2html/tarball/0.1',
+    download_url = 'https://github.com/softvar/json2html/tarball/0.2',
     keywords = ['json', 'HTML', 'Table'],
     license = 'MIT',
     classifiers = (
