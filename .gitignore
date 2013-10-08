@@ -16,3 +16,8 @@ docs/_templates
 
 #pypi settings file
 .pyirc
+
+#test files
+test.py
+importjson
+ordered_dict
