@@ -19,37 +19,10 @@ class JSON:
 		else:
 			raise Exception('Can\'t convert NULL!')
 		
-
+		
 		ordered_json = json.loads(self.json_input, object_pairs_hook=ordereddict.OrderedDict)
 		return self.htmlConvertor(ordered_json)
 
-	def htmlConvertor1(self,ordered_json):
-		print '<table border="1">'
-		for k,v in ordered_json.iteritems():
-			print '<tr>'
-			print '<th>'+ str(k) +'</th>'
-			if(isinstance(v,list)):
-				print '<td><ul>'
-				for i in range(0,len(v)):
-					if(isinstance(v[i],unicode)):
-						a=a+ '<li>'+str(v[i])+'</li>'
-					elif(isinstance(v[i],int)):
-						a=a+ '<li>'+str(v[i])+'</li>'
-					elif(isinstance(v[i],list)==False):
-						self.htmlConvertor(v[i])
-				print '</ul></td>'
-				print '</tr>'
-			elif(isinstance(v,unicode)):
-				print '<td>'+ str(v) +'</td>'
-				print '</tr>'
-			elif(isinstance(v,int)):
-				print '<td>'+ str(v) +'</td>'
-				print '</tr>'
-			else:
-				print '<td>'
-				self.htmlConvertor(v)
-				print '</td></tr>'
-		print '</table>'
 
 	def iterJson(self,ordered_json):
 		global a
@@ -57,11 +30,13 @@ class JSON:
 		for k,v in ordered_json.iteritems():
 			a=a+ '<tr>'
 			a=a+ '<th>'+ str(k) +'</th>'
+			if (v==None):
+				v = unicode("")	
 			if(isinstance(v,list)):
 				a=a+ '<td><ul>'
 				for i in range(0,len(v)):
 					if(isinstance(v[i],unicode)):
-						a=a+ '<li>'+str(v[i])+'</li>'
+						a=a+ '<li>'+unicode(v[i])+'</li>'
 					elif(isinstance(v[i],int) or isinstance(v,float)):
 						a=a+ '<li>'+str(v[i])+'</li>'
 					elif(isinstance(v[i],list)==False):
@@ -69,7 +44,7 @@ class JSON:
 				a=a+ '</ul></td>'
 				a=a+ '</tr>'
 			elif(isinstance(v,unicode)):
-				a=a+ '<td>'+ str(v) +'</td>'
+				a=a+ '<td>'+ unicode(v) +'</td>'
 				a=a+ '</tr>'
 			elif(isinstance(v,int) or isinstance(v,float)):
 				a=a+ '<td>'+ str(v) +'</td>'
@@ -87,6 +62,7 @@ class JSON:
 		generating HTML table code with raw/bootstrap styling.
 		'''
 		global a
+		a=''
 		try:
 			for k,v in ordered_json.iteritems():
 				pass
@@ -95,7 +71,7 @@ class JSON:
 		except:
 			for i in range(0,len(ordered_json)):
 				if(isinstance(ordered_json[i],unicode)):
-					a=a+ '<li>'+str(ordered_json[i])+'</li>'
+					a=a+ '<li>'+unicode(ordered_json[i])+'</li>'
 				elif(isinstance(ordered_json[i],int) or isinstance(ordered_json[i],float)):
 					a=a+ '<li>'+str(ordered_json[i])+'</li>'
 				elif(isinstance(ordered_json[i],list)==False):
@@ -103,34 +79,5 @@ class JSON:
 
 		return a
 
-	def htmlConvertormain(self,ordered_json):
-		global a
-		a+='<table border="1">\n'
-		for k,v in ordered_json.iteritems():
-			a+= '<tr>\n'
-			a+= '<th>'+ str(k) +'</th>\n'
-			if(isinstance(v,list)):
-				a+= '<td><ul>\n'
-				for i in range(0,len(v)):
-					if(isinstance(v[i],unicode)):
-						a+= '<li>'+str(v[i])+'</li>\n'
-					elif(isinstance(v[i],int)):
-						a+= '<li>'+str(v[i])+'</li>\n'
-					elif(isinstance(v[i],list)==False):
-						self.htmlConvertor(v[i])
-				a+= '</ul></td>\n'
-				a+= '</tr>\n'
-			elif(isinstance(v,unicode)):
-				a+= '<td>'+ str(v) +'</td>\n'
-				a+= '</tr>\n'
-			elif(isinstance(v,int)):
-				a+= '<td>'+ str(v) +'</td>\n'
-				a+= '</tr>\n'
-			else:
-				a+= '<td>\n'
-				self.htmlConvertor(v)
-				a+= '</td></tr>\n'
-		a+= '</table>'
-		return a
 
 json2html = JSON()
