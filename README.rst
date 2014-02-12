@@ -3,6 +3,15 @@ json2html
 
 Python wrapper to convert ``JSON object`` into a human readable ``HTML`` representation.
 
+|Latest Version| |Downloads|
+
+.. |Latest Version| image:: https://pypip.in/v/json2html/badge.png
+    :target: https://pypi.python.org/pypi/json2html/
+
+.. |Downloads| image:: https://pypip.in/d/json2html/badge.png
+    :target: https://pypi.python.org/pypi//json2html/
+
+
 Features
 --------
 
