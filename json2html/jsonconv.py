@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*- 
+
 '''
 JSON 2 HTML convertor
 =====================
@@ -12,7 +14,6 @@ Michel Müller 2015-1-31: Added bootstrap option, converting table-like JSON
 LICENSE: MIT
 --------
 '''
-# -*- coding: utf-8 -*- 
 
 import json
 import ordereddict
