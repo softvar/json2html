@@ -15,8 +15,9 @@ Python wrapper to convert ``JSON object`` into a human readable ``HTML`` represe
 Features
 --------
 
-1. User-friendly readable format.
-2. Easy to style for different purposes.
+1. User-friendly Table fomat - easy to read and show.
+2. If any value of some key is array of objects, and all keys of all those objects are same, it will auto-club them instead of creating a new row for each Object within Array. For eg: ```jsonObject = {"sampleData": [ {"a":1, "b":2, "c":3}, {"a":5, "b":6, "c":7} ] }```
+3. Easy to style for different purposes. Pass table attributes so that generated Table can have custom attributes like class, etc..
 
 Installation
 -------------
@@ -25,25 +26,79 @@ Installation
 
 	$ pip install json2html
 
-Or, Download `here <https://github.com/softvar/json2html/tarball/0.1>`_ and run ``python setup.py install`` after changing directory to `/json2html`
+Or, Download `here <https://github.com/softvar/json2html/tarball/0.3>`_ and run ``python setup.py install`` after changing directory to `/json2html`
 
 Example Usage
 -------------
 
-Example 1:
+**Example 1:** Basic usage
 
 .. code-block:: python
 
 	from json2html import *
-	json2html.convert(json = {'name':'softvar','age':'21'})
+	json2html.convert(json = {'name':'softvar','age':'22'})
 
 Output:
 
 .. code-block:: bash
 
-	<table border="1"><tr><th>age</th><td>21</td></tr><tr><th>name</th><td>softvar</td></tr></table>
+	<table border="1"><tr><th>age</th><td>22</td></tr><tr><th>name</th><td>softvar</td></tr></table>
 
-Example 2: [Source: `json.org/example <http://json.org/example>`_]
+=====  =====
+age    22
+name   softvar
+=====  =====
+
+**Example 2:** Setting custom attributes to table
+
+.. code-block:: python
+
+	from json2html import *
+	json2html.convert(json = {'name':'softvar','age':'22'}, table_attributes="class=\"table table-bordered table-hover\"")
+
+Output:
+
+.. code-block:: bash
+
+	<table class="table table-bordered table-hover"><tr><th>age</th><td>22</td></tr><tr><th>name</th><td>softvar</td></tr></table>
+
+**Example 3:** Clubbing same keys of: Array of Objects
+
+.. code-block:: python
+
+	from json2html import *
+	_json2conv = {"sample": [ {"a":1, "b":2, "c":3}, {"a":5, "b":6, "c":7} ] }
+	json2html.convert(json = _json2conv)
+
+Output:
+
+.. code-block:: bash
+
+	<table border="1"><tr><th>sample</th><td><table border="1"><tr><th>a</th><th>c</th><th>b</th></tr><tr><td>1</td><td>3</td><td>2</td></tr><tr><td>5</td><td>7</td><td>6</td></tr></table></td></tr></table>
+
+=====  =====  =====
+a      c      b
+=====  =====  =====
+1      3      2
+-----  -----  -----
+5      7      6
+=====  =====  =====
+
+**Example 4:** Each row for different key(s) of: Array of Objects
+
+.. code-block:: python
+
+	from json2html import *
+	_json2conv = {"sample": [ {"a":1, "b":2, "c":3}, {"1a1":5, "1b1":6, "c":7} ] }
+	json2html.convert(json = _json2conv)
+
+Output:
+
+.. code-block:: bash
+
+	<table border="1"><tr><th>sample</th><td><ul><li><table border="1"><tr><th>a</th><td>1</td></tr><tr><th>c</th><td>3</td></tr><tr><th>b</th><td>2</td></tr></table></li><li><table border="1"><tr><th>1b1</th><td>6</td></tr><tr><th>c</th><td>7</td></tr><tr><th>1a1</th><td>5</td></tr></table></li></ul></td></tr></table>
+
+**Example 5:** [Source: `json.org/example <http://json.org/example>`_]
 
 .. code-block:: python
 
@@ -83,10 +138,14 @@ Output:
 Live Demo
 ---------
 
-Visit `json2html Convertor <http://json2html.herokuapp.com>`_
+Visit `Online json2html Convertor <http://json2html.herokuapp.com>`_
 
+Contributors
+------------
 
+1. Michel Müller: `@muellermichel <https://github.com/muellermichel>`_
+	* patch `#2 <https://github.com/softvar/json2html/pull/2>`_
+	* Added support for clubbing Array of Objects with same keys, more readable format.
+	* Added support for adding custom `table_attributes`.
 
-
-
-
+Patches are highly welcomed.
