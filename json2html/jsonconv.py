@@ -16,8 +16,6 @@ LICENSE: MIT
 import json
 import ordereddict
 
-a= ''
-
 class JSON:
 	#def __init__(self):
 
@@ -76,7 +74,7 @@ class JSON:
 				return self.iterJson(entry)
 			return '' #safety: don't do recursion over anything that we don't know about - iteritems() will most probably fail
 
-		global a
+		a = ''
 		global table_attributes
 
 		table_init_markup = "<table %s>" %(table_attributes)
@@ -101,15 +99,13 @@ class JSON:
 			a=a+ '<td>' + markup(v) + '</td>'
 			a=a+ '</tr>'
 		a=a+ '</table>'
+		return a
 
 	def htmlConvertor(self,ordered_json):
 		'''
 		converts JSON Object into human readable HTML representation
 		generating HTML table code with raw/bootstrap styling.
 		'''
-		global a
-		a=''
-		self.iterJson(ordered_json)
-		return a
+		return self.iterJson(ordered_json)
 
 json2html = JSON()
