@@ -27,6 +27,8 @@ class JSON:
 		table_attributes = ''
 		if 'table_attributes' in args:
 			table_attributes = args['table_attributes']
+		else:
+			table_attributes = "<table border=\"1\">"
 		if 'json' in args:
 			self.json_input = args['json']
 			try:
