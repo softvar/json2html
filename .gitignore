@@ -15,7 +15,7 @@ docs/_static
 docs/_templates
 
 #pypi settings file
-.pyirc
+.pypirc
 
 #test files
 test.py
