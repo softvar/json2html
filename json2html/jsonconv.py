@@ -25,9 +25,10 @@ class JSON:
 		'''
 		convert json Object to HTML Table format
 		'''
-		use_bootstrap = False
+		global use_bootstrap_setting
+		use_bootstrap_setting = False
 		if 'use_bootstrap' in args and args['use_bootstrap'] == True:
-			use_bootstrap = True
+			use_bootstrap_setting = True
 		if 'json' in args:
 			self.json_input = args['json']
 			try:
@@ -39,7 +40,7 @@ class JSON:
 
 
 		ordered_json = json.loads(self.json_input, object_pairs_hook=ordereddict.OrderedDict)
-		return self.htmlConvertor(ordered_json,use_bootstrap)
+		return self.htmlConvertor(ordered_json)
 
 	def columnHeadersFromListOfDicts(self,ordered_json):
 		if len(ordered_json) < 2:
@@ -57,18 +58,20 @@ class JSON:
 					return None
 		return column_headers
 
-	def iterJson(self,ordered_json,use_bootstrap=False):
+	def iterJson(self,ordered_json):
 		def markupForListEntry(entry):
 			if(isinstance(entry,unicode)):
 				return unicode(entry)
 			if(isinstance(entry,int) or isinstance(entry,float)):
 				return str(entry)
 			if(isinstance(entry,list)==False):
-				return self.iterJson(entry,use_bootstrap)
+				return self.iterJson(entry)
 			return ''
 
 		global a
-		table_init_markup = "<table class=\"table table-condensed table-bordered table-hover\">" if use_bootstrap else "<table border=\"1\">"
+		global use_bootstrap_setting
+		
+		table_init_markup = "<table class=\"table table-condensed table-bordered table-hover\">" if use_bootstrap_setting else "<table border=\"1\">"
 		a=a+ table_init_markup
 		for k,v in ordered_json.iteritems():
 			a=a+ '<tr>'
@@ -98,11 +101,11 @@ class JSON:
 			else:
 				a=a+ '<td>'
 				#a=a+ '<table border="1">'
-				self.iterJson(v,use_bootstrap)
+				self.iterJson(v)
 				a=a+ '</td></tr>'
 		a=a+ '</table>'
 
-	def htmlConvertor(self,ordered_json,use_bootstrap=False):
+	def htmlConvertor(self,ordered_json):
 		'''
 		converts JSON Object into human readable HTML representation
 		generating HTML table code with raw/bootstrap styling.
@@ -112,7 +115,7 @@ class JSON:
 		try:
 			for k,v in ordered_json.iteritems():
 				pass
-			self.iterJson(ordered_json,use_bootstrap)
+			self.iterJson(ordered_json)
 		except:
 			for i in range(0,len(ordered_json)):
 				if(isinstance(ordered_json[i],unicode)):
@@ -120,7 +123,7 @@ class JSON:
 				elif(isinstance(ordered_json[i],int) or isinstance(ordered_json[i],float)):
 					a=a+ '<li>'+str(ordered_json[i])+'</li>'
 				elif(isinstance(ordered_json[i],list)==False):
-					self.htmlConvertor(ordered_json[i],use_bootstrap)
+					self.htmlConvertor(ordered_json[i])
 
 		return a
 
