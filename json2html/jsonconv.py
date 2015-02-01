@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*- 
+# -*- coding: utf-8 -*-
 
 '''
 JSON 2 HTML convertor
@@ -25,10 +25,10 @@ class JSON:
 		'''
 		convert json Object to HTML Table format
 		'''
-		global use_bootstrap_setting
-		use_bootstrap_setting = False
-		if 'use_bootstrap' in args and args['use_bootstrap'] == True:
-			use_bootstrap_setting = True
+		global table_attributes
+		table_attributes = ''
+		if 'table_attributes' in args:
+			table_attributes = args['table_attributes']
 		if 'json' in args:
 			self.json_input = args['json']
 			try:
@@ -69,9 +69,9 @@ class JSON:
 			return ''
 
 		global a
-		global use_bootstrap_setting
-		
-		table_init_markup = "<table class=\"table table-condensed table-bordered table-hover\">" if use_bootstrap_setting else "<table border=\"1\">"
+		global table_attributes
+
+		table_init_markup = "<table %s>" %(table_attributes)
 		a=a+ table_init_markup
 		for k,v in ordered_json.iteritems():
 			a=a+ '<tr>'
