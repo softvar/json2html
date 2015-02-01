@@ -58,15 +58,23 @@ class JSON:
 					return None
 		return column_headers
 
+	#ordered_json needs to be a dict
 	def iterJson(self,ordered_json):
-		def markupForListEntry(entry):
+		def markup(entry, parent_is_list=False):
 			if(isinstance(entry,unicode)):
 				return unicode(entry)
 			if(isinstance(entry,int) or isinstance(entry,float)):
 				return str(entry)
-			if(isinstance(entry,list)==False):
+			if(parent_is_list and isinstance(entry,list)==True):
+				#list of lists are not accepted
+				return ''
+			if(isinstance(entry,list)==True) and len(entry) == 0:
+				return ''
+			if(isinstance(entry,list)==True):
+				return '<ul><li>' + '</li><li>'.join([markup(child, parent_is_list=True) for child in entry]) + '</li></ul>'
+			if(isinstance(entry,dict)==True):
 				return self.iterJson(entry)
-			return ''
+			return '' #safety: don't do recursion over anything that we don't know about - iteritems() will most probably fail
 
 		global a
 		global table_attributes
@@ -80,29 +88,18 @@ class JSON:
 				v = unicode("")
 			if(isinstance(v,list)):
 				column_headers = self.columnHeadersFromListOfDicts(v)
-				a=a+ '<td><ul>'
 				if column_headers != None:
+					a=a+ '<td>'
 					a=a+ table_init_markup
 					a=a+ '<tr><th>' + '</th><th>'.join(column_headers) + '</th></tr>'
 					for list_entry in v:
-						a=a+ '<tr><td>' + '</td><td>'.join([markupForListEntry(list_entry[column_header]) for column_header in column_headers]) + '</td></tr>'
+						a=a+ '<tr><td>' + '</td><td>'.join([markup(list_entry[column_header]) for column_header in column_headers]) + '</td></tr>'
 					a=a+ '</table>'
-				else:
-					for i in range(0,len(v)):
-						a=a+ '<li>'+markupForListEntry(v[i])+'</li>'
-				a=a+ '</ul></td>'
-				a=a+ '</tr>'
-			elif(isinstance(v,unicode)):
-				a=a+ '<td>'+ unicode(v) +'</td>'
-				a=a+ '</tr>'
-			elif(isinstance(v,int) or isinstance(v,float)):
-				a=a+ '<td>'+ str(v) +'</td>'
-				a=a+ '</tr>'
-			else:
-				a=a+ '<td>'
-				#a=a+ '<table border="1">'
-				self.iterJson(v)
-				a=a+ '</td></tr>'
+					a=a+ '</td>'
+					a=a+ '</tr>'
+					continue
+			a=a+ '<td>' + markup(v) + '</td>'
+			a=a+ '</tr>'
 		a=a+ '</table>'
 
 	def htmlConvertor(self,ordered_json):
@@ -112,20 +109,7 @@ class JSON:
 		'''
 		global a
 		a=''
-		try:
-			for k,v in ordered_json.iteritems():
-				pass
-			self.iterJson(ordered_json)
-		except:
-			for i in range(0,len(ordered_json)):
-				if(isinstance(ordered_json[i],unicode)):
-					a=a+ '<li>'+unicode(ordered_json[i])+'</li>'
-				elif(isinstance(ordered_json[i],int) or isinstance(ordered_json[i],float)):
-					a=a+ '<li>'+str(ordered_json[i])+'</li>'
-				elif(isinstance(ordered_json[i],list)==False):
-					self.htmlConvertor(ordered_json[i])
-
+		self.iterJson(ordered_json)
 		return a
-
 
 json2html = JSON()
