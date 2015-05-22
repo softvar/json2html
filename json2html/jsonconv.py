@@ -66,6 +66,8 @@ class JSON:
 		@contributed by: @muellermichel
 		'''
 
+		if not isinstance(ordered_json, list):
+			return None
 		if len(ordered_json) < 2:
 			return None
 		if not isinstance(ordered_json[0],dict):
@@ -102,13 +104,17 @@ class JSON:
 				return ''
 			if(isinstance(entry,list)==True) and len(entry) == 0:
 				return ''
-			if(isinstance(entry,list)==True):
-				return '<ul><li>' + '</li><li>'.join([markup(child, parent_is_list=True) for child in entry]) + '</li></ul>'
-			if(isinstance(entry,dict)==True):
+			if(isinstance(entry,list)==True) or (isinstance(entry,dict)==True):
 				return self.iterJson(entry)
 
 			#safety: don't do recursion over anything that we don't know about - iteritems() will most probably fail
 			return ''
+
+		def markupList(v):
+			convertedOutput = '<tr><th>' + '</th><th>'.join(column_headers) + '</th></tr>'
+			for list_entry in v:
+				convertedOutput = convertedOutput + '<tr><td>' + '</td><td>'.join([markup(list_entry[column_header]) for column_header in column_headers]) + '</td></tr>'
+			return convertedOutput
 
 		convertedOutput = ''
 
@@ -116,26 +122,32 @@ class JSON:
 		table_init_markup = "<table %s>" %(table_attributes)
 		convertedOutput = convertedOutput + table_init_markup
 
-		for k,v in ordered_json.iteritems():
-			convertedOutput = convertedOutput + '<tr>'
-			convertedOutput = convertedOutput + '<th>'+ str(k) +'</th>'
+		if isinstance(ordered_json, list):
+			column_headers = self.columnHeadersFromListOfDicts(ordered_json)
+			if column_headers != None:
+				convertedOutput = convertedOutput + markupList(ordered_json)
+			else:
+				convertedOutput = convertedOutput + '<tr>'
+				for v in ordered_json:
+					convertedOutput = convertedOutput + '<td>' + markup(v) + '</td>'
+				convertedOutput = convertedOutput + '</tr>'
+		else:
+			for k,v in ordered_json.iteritems():
+				convertedOutput = convertedOutput + '<tr>'
+				convertedOutput = convertedOutput + '<th>'+ str(k) +'</th>'
 
-			if (v == None):
-				v = unicode("")
-			if(isinstance(v,list)):
+				if (v == None):
+					v = unicode("")
 				column_headers = self.columnHeadersFromListOfDicts(v)
 				if column_headers != None:
 					convertedOutput = convertedOutput + '<td>'
 					convertedOutput = convertedOutput + table_init_markup
-					convertedOutput = convertedOutput + '<tr><th>' + '</th><th>'.join(column_headers) + '</th></tr>'
-					for list_entry in v:
-						convertedOutput = convertedOutput + '<tr><td>' + '</td><td>'.join([markup(list_entry[column_header]) for column_header in column_headers]) + '</td></tr>'
+					convertedOutput = convertedOutput + markupList(v)
 					convertedOutput = convertedOutput + '</table>'
 					convertedOutput = convertedOutput + '</td>'
-					convertedOutput = convertedOutput + '</tr>'
-					continue
-			convertedOutput = convertedOutput + '<td>' + markup(v) + '</td>'
-			convertedOutput = convertedOutput + '</tr>'
+				else:
+					convertedOutput = convertedOutput + '<td>' + markup(v) + '</td>'
+				convertedOutput = convertedOutput + '</tr>'
 		convertedOutput = convertedOutput + '</table>'
 		return convertedOutput
 
