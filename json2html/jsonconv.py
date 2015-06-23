@@ -16,7 +16,7 @@ LICENSE: MIT
 --------
 '''
 
-import json
+import simplejson
 import ordereddict
 
 class JSON:
@@ -40,9 +40,9 @@ class JSON:
 		if 'json' in args:
 			self.json_input = args['json']
 			try:
-				json.loads(self.json_input)
+				simplejson.loads(self.json_input)
 			except:
-				self.json_input = json.dumps(self.json_input)
+				self.json_input = simplejson.dumps(self.json_input)
 		else:
 			raise Exception('Can\'t convert NULL!')
 
