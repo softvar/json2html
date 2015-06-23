@@ -93,6 +93,8 @@ class JSON:
 			'''
 			Check for each value corresponding to its key and return accordingly
 			'''
+			if(not isinstance(entry,list) and not isinstance(entry,dict)):
+				return str(entry)
 			if(isinstance(entry,unicode)):
 				return unicode(entry)
 			if(isinstance(entry,int) or isinstance(entry,float)):
