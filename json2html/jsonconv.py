@@ -118,7 +118,7 @@ class JSON:
 
 		for k,v in ordered_json.iteritems():
 			convertedOutput = convertedOutput + '<tr>'
-			convertedOutput = convertedOutput + '<th>'+ str(k) +'</th>'
+			convertedOutput = convertedOutput + '<th>'+ markup(k) +'</th>'
 
 			if (v == None):
 				v = unicode("")
