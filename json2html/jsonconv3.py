@@ -3,21 +3,17 @@
 '''
 JSON 2 HTML convertor
 =====================
-
 (c) Varun Malhotra 2013
 Source Code: https://github.com/softvar/json2html
-
-
 Contributors:
 -------------
 1. Michel Müller(@muellermichel), patch #2 - https://github.com/softvar/json2html/pull/2
-
 LICENSE: MIT
 --------
 '''
 
 import json
-import ordereddict
+import collections
 
 class JSON:
 
@@ -47,7 +43,7 @@ class JSON:
 			raise Exception('Can\'t convert NULL!')
 
 
-		ordered_json = json.loads(self.json_input, object_pairs_hook=ordereddict.OrderedDict)
+		ordered_json = json.loads(self.json_input, object_pairs_hook=collections.OrderedDict)
 
 		return self.iterJson(ordered_json)
 
@@ -57,12 +53,10 @@ class JSON:
 		If suppose some key has array of objects and all the keys are same,
 		instead of creating a new row for each such entry, club those values,
 		thus it makes more sense and more readable code.
-
 		@example:
 			jsonObject = {"sampleData": [ {"a":1, "b":2, "c":3}, {"a":5, "b":6, "c":7} ] }
 			OUTPUT:
 				<table border="1"><tr><th>1</th><td><table border="1"><tr><th>a</th><th>c</th><th>b</th></tr><tr><td>1</td><td>3</td><td>2</td></tr><tr><td>5</td><td>7</td><td>6</td></tr></table></td></tr></table>
-
 		@contributed by: @muellermichel
 		'''
 
@@ -93,8 +87,8 @@ class JSON:
 			'''
 			Check for each value corresponding to its key and return accordingly
 			'''
-			if(isinstance(entry,unicode)):
-				return unicode(entry)
+			if(isinstance(entry,str)):
+				return entry
 			if(isinstance(entry,int) or isinstance(entry,float)):
 				return str(entry)
 			if(parent_is_list and isinstance(entry,list)==True):
@@ -116,12 +110,12 @@ class JSON:
 		table_init_markup = "<table %s>" %(table_attributes)
 		convertedOutput = convertedOutput + table_init_markup
 
-		for k,v in ordered_json.iteritems():
+		for k,v in ordered_json.items():
 			convertedOutput = convertedOutput + '<tr>'
 			convertedOutput = convertedOutput + '<th>'+ markup(k) +'</th>'
 
 			if (v == None):
-				v = unicode("")
+				v = ""
 			if(isinstance(v,list)):
 				column_headers = self.columnHeadersFromListOfDicts(v)
 				if column_headers != None:
