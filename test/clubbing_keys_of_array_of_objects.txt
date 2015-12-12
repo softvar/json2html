@@ -1,0 +1,1 @@
+<table border="1"><tr><th>sample</th><td><table border="1"><tr><th>lang</th><th>name</th><th>desc</th></tr><tr><td>python</td><td>json2html</td><td>coverts json 2 html table format</td></tr><tr><td>python</td><td>testing</td><td>clubbing same keys of array of objects</td></tr></table></td></tr></table>

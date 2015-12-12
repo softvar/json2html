@@ -1,0 +1,6 @@
+{
+	"sample": [
+		{"name": "json2html", "desc": "coverts json 2 html table format", "lang": "python"},
+		{"name": "testing", "desc": "clubbing same keys of array of objects", "lang": "python"}
+	]
+}
