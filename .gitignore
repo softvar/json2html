@@ -21,3 +21,5 @@ docs/_templates
 test.py
 importjson
 ordered_dict
+
+venv/
