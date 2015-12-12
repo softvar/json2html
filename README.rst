@@ -3,7 +3,9 @@ json2html
 
 Python wrapper to convert ``JSON`` into a human readable ``HTML Table`` representation.
 
-|Latest Version| |Downloads| [![Build Status](http://img.shields.io/travis/softvar/json2html/master.svg?style=flat)](http://travis-ci.org/softvar/json2html)
+|Latest Version| |Downloads| |Build|
+
+.. |Build| image:: https://api.travis-ci.org/softvar/json2html.png
 
 .. |Latest Version| image:: https://img.shields.io/pypi/v/json2html.svg
     :target: https://pypi.python.org/pypi/json2html
