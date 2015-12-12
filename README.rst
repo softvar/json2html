@@ -20,6 +20,12 @@ Features
 2. If any value of some key is array of objects, and all keys of all those objects are same, it will auto-club them instead of creating a new row for each Object within Array. For eg: ```jsonObject = {"sampleData": [ {"a":1, "b":2, "c":3}, {"a":5, "b":6, "c":7} ] }```
 3. Easy to style for different purposes. Pass table attributes so that generated Table can have custom attributes like class, etc..
 
+
+Live Demo
+---------
+
+Visit `Online json2html Convertor <http://json2html.varunmalhotra.xyz/>`_
+
 Installation
 -------------
 
@@ -135,11 +141,6 @@ Output:
 .. code-block:: bash
 
 	<table border="1"><tr><th>glossary</th><td><table border="1"><tr><th>GlossDiv</th><td><table border="1"><tr><th>GlossList</th><td><table border="1"><tr><th>GlossEntry</th><td><table border="1"><tr><th>GlossDef</th><td><table border="1"><tr><th>GlossSeeAlso</th><td><ul><li>GML</li><li>XML</li></ul></td></tr><tr><th>para</th><td>A meta-markup language, used to create markup languages such as DocBook.</td></tr></table></td></tr><tr><th>GlossSee</th><td>markup</td></tr><tr><th>Acronym</th><td>SGML</td></tr><tr><th>GlossTerm</th><td>Standard Generalized Markup Language</td></tr><tr><th>Abbrev</th><td>ISO 8879:1986</td></tr><tr><th>SortAs</th><td>SGML</td></tr><tr><th>ID</th><td>SGML</td></tr></table></td></tr></table></td></tr><tr><th>title</th><td>S</td></tr></table></td></tr><tr><th>title</th><td>example glossary</td></tr></table></td></tr></table>
-
-Live Demo
----------
-
-Visit `Online json2html Convertor <http://json2html.herokuapp.com>`_
 
 Tests
 ------
