@@ -6,5 +6,5 @@ python wrapper for JSON to HTML-Table convertor
 from jsonconv import *
 
 __author__ = 'Varun Malhotra'
-__version__ = '1.0.0'
+__version__ = '1.0.1'
 __license__ = 'MIT'
