@@ -153,7 +153,7 @@ Tests
 Contributors
 ------------
 
-1. Michel Müller: `@muellermichel <https://github.com/muellermichel>`_
+1. Michel Mueller: `@muellermichel <https://github.com/muellermichel>`_
 	* patch `#2 <https://github.com/softvar/json2html/pull/2>`_
 	* Added support for clubbing Array of Objects with same keys, more readable format.
 	* Added support for adding custom `table_attributes`.
