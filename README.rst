@@ -154,8 +154,13 @@ Contributors
 ------------
 
 1. Michel Müller: `@muellermichel <https://github.com/muellermichel>`_
-	* patch `#2 <https://github.com/softvar/json2html/pull/2>`_
+	* `Patch #2 <https://github.com/softvar/json2html/pull/2>`_
 	* Added support for clubbing Array of Objects with same keys, more readable format.
 	* Added support for adding custom `table_attributes`.
+
+2. Daniel Lekic: `@lekic <https://github.com/lekic>`_
+	* `Patch #17 <https://github.com/softvar/json2html/pull/17>`_
+	* Fixed issue with one-item lists not rendering correctly.
+	* General code cleanup, fixed all naming conventions and coding standards to adhere to PEP8 conventions.
 
 Patches are highly welcomed.
