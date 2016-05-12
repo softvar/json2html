@@ -158,8 +158,8 @@ class Json2Html:
                 convertedOutput = convertedOutput + '</tr>'
             convertedOutput = convertedOutput + '</table>'
 
-        except:
-            raise Exception('Not a valid JSON list')
+        except Exception as e:
+            raise Exception('Could not process JSON list:' + e)
         return convertedOutput
 
 json2html = Json2Html()
