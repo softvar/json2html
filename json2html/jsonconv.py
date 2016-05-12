@@ -139,7 +139,8 @@ class Json2Html:
         convertedOutput = convertedOutput + table_init_markup
 
         try:
-            for (k, v) in iteritems(inputtedJson):
+            for k in sorted(inputtedJson):
+                v = inputtedJson[k]
                 convertedOutput = convertedOutput + '<tr>'
                 convertedOutput = convertedOutput + '<th>' + markup(k) + '</th>'
 
