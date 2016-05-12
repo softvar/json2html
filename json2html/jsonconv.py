@@ -109,8 +109,12 @@ class Json2Html:
                 Check for each value corresponding to its key
                 and return accordingly
             '''
-            if (isinstance(entry, unicode)):
-                return unicode(entry)
+            if (sys.version_info[:2] < (3, 0)):
+                if (isinstance(entry, unicode)):
+                    return unicode(entry)
+            else:
+                if (isinstance(entry, str)):
+                    return entry
             if (isinstance(entry, int) or isinstance(entry, float)):
                 return str(entry)
             if (isinstance(entry, list) == True) and len(entry) == 0:
