@@ -135,7 +135,7 @@ class Json2Html:
         convertedOutput = convertedOutput + table_init_markup
 
         try:
-            for (k, v) in inputtedJson.iteritems():
+            for (k, v) in iteritems(inputtedJson):
                 convertedOutput = convertedOutput + '<tr>'
                 convertedOutput = convertedOutput + '<th>' + markup(k) + '</th>'
 
@@ -160,7 +160,7 @@ class Json2Html:
             convertedOutput = convertedOutput + '</table>'
 
         except Exception as e:
-            raise Exception('Could not process JSON list:' + e)
+            raise Exception('Could not process JSON list:' + str(e))
         return convertedOutput
 
 json2html = Json2Html()
