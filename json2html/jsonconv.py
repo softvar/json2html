@@ -17,6 +17,7 @@ LICENSE: MIT
 '''
 
 import sys
+from six import iteritems
 
 if (sys.version_info[:2] < (2, 7)):
     import simplejson as json
