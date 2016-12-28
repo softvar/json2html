@@ -154,7 +154,7 @@ class Json2Html:
 
                         convertedOutput = convertedOutput + '</table></td></tr>'
                         continue
-                convertedOutput = convertedOutput + '<td>' + markup(v) + '</td>'
+                convertedOutput = convertedOutput + '<td>' + '<pre>' + markup(v) + '</pre>' +  '</td>'
                 convertedOutput = convertedOutput + '</tr>'
             convertedOutput = convertedOutput + '</table>'
 
