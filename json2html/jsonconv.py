@@ -17,6 +17,7 @@ LICENSE: MIT
 '''
 
 import sys
+from six import iteritems
 
 if (sys.version_info[:2] < (2, 7)):
     import simplejson as json
@@ -108,8 +109,12 @@ class Json2Html:
                 Check for each value corresponding to its key
                 and return accordingly
             '''
-            if (isinstance(entry, unicode)):
-                return unicode(entry)
+            if (sys.version_info[:2] < (3, 0)):
+                if (isinstance(entry, unicode)):
+                    return unicode(entry)
+            else:
+                if (isinstance(entry, str)):
+                    return entry
             if (isinstance(entry, int) or isinstance(entry, float)):
                 return str(entry)
             if (isinstance(entry, list) == True) and len(entry) == 0:
@@ -134,7 +139,8 @@ class Json2Html:
         convertedOutput = convertedOutput + table_init_markup
 
         try:
-            for (k, v) in inputtedJson.iteritems():
+            for k in sorted(inputtedJson):
+                v = inputtedJson[k]
                 convertedOutput = convertedOutput + '<tr>'
                 convertedOutput = convertedOutput + '<th>' + markup(k) + '</th>'
 
@@ -158,8 +164,8 @@ class Json2Html:
                 convertedOutput = convertedOutput + '</tr>'
             convertedOutput = convertedOutput + '</table>'
 
-        except:
-            raise Exception('Not a valid JSON list')
+        except Exception as e:
+            raise Exception('Could not process JSON list:' + str(e))
         return convertedOutput
 
 json2html = Json2Html()
