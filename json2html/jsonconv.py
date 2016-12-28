@@ -50,7 +50,7 @@ class Json2Html:
             except:
                 self.json_input = json.dumps(self.json_input)
         else:
-            raise Exception('Can\'t convert NULL!')
+            raise Exception("Please use json2html's convert function with a keyword argument 'json' - e.g. `json2html.convert(json={\"hello\":\"world!\"})`")
 
         inputtedJson = json.loads(self.json_input)
         return self.iterJson(inputtedJson)
