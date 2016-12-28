@@ -33,7 +33,7 @@ class TestJson2Html(unittest.TestCase):
         with self.assertRaises(Exception) as context:
             json2html.convert(json = _json)
 
-        self.assertIn('Can\'t convert NULL!', context.exception)
+        self.assertIn("Please use json2html's convert", context.exception)
 
     def test_invalid_json_exception(self, *args, **kwargs):
         _json = {'name'}
