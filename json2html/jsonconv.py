@@ -34,8 +34,7 @@ else:
     text_types = [str]
 
 class Json2Html:
-
-    def convert(self, json="", table_attributes='border="1"'):
+    def convert(self, json="", table_attributes='border="1"', clubbing=True):
         """
             Convert JSON to HTML Table format
         """
@@ -43,6 +42,7 @@ class Json2Html:
         # table attributes such as class, id, data-attr-*, etc.
         # eg: table_attributes = 'class = "table table-bordered sortable"'
         self.table_init_markup = "<table %s>" % table_attributes
+        self.clubbing = clubbing
 
         if not json:
             json_input = {}
@@ -96,10 +96,8 @@ class Json2Html:
             Iterate over the JSON input and process it
             to generate the super awesome HTML format
         """
-        if type(json_input) in text_types:
+        if type(json_input) in text_types + [int, float]:
             return text(json_input)
-        if isinstance(json_input, int) or isinstance(json_input, float):
-            return str(json_input)
         if isinstance(json_input, list) and len(json_input) == 0:
             return ''
         if isinstance(json_input, list):
@@ -120,7 +118,9 @@ class Json2Html:
             to generate either an HTML table or a HTML list, depending on what's inside.
         """
         converted_output = ""
-        column_headers = self.column_headers_from_list_of_dicts(list_input)
+        column_headers = None
+        if self.clubbing:
+            column_headers = self.column_headers_from_list_of_dicts(list_input)
         if column_headers is not None:
             converted_output += self.table_init_markup
             converted_output += '<tr><th>' + '</th><th>'.join(column_headers) + '</th></tr>'

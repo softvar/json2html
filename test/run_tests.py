@@ -24,6 +24,7 @@ class TestJson2Html(unittest.TestCase):
             with open('%s.txt' % fpath, 'r') as f:
                 expected_output = f.read()
             self.test_json.append({
+                'filename': _file,
                 'json': input_json,
                 'output': re.sub(
                     r"[\r\n\t]*",
@@ -58,16 +59,18 @@ class TestJson2Html(unittest.TestCase):
             self.assertIn('Expecting property name', str(context.exception))
 
     def test_all(self):
-        for i in range(0, len(self.test_json)):
-            _json = self.test_json[i]['json']
+        for test_definition in self.test_json:
+            _json = test_definition['json']
+            _clubbing = "no_clubbing" not in test_definition['filename']
+            print("testing %s" %(test_definition['filename']))
             self.assertEqual(
-                json2html.convert(json = _json),
-                self.test_json[i]['output']
+                json2html.convert(json = _json, clubbing=_clubbing),
+                test_definition['output']
             )
-            #testing whether we can call convert with a placed arg instead of keyword arg
+            #testing whether we can call convert with a positional args instead of keyword arg
             self.assertEqual(
-                json2html.convert(_json),
-                self.test_json[i]['output']
+                json2html.convert(_json, clubbing=_clubbing),
+                test_definition['output']
             )
 
 
