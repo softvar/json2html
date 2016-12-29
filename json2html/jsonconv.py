@@ -18,11 +18,12 @@ LICENSE: MIT
 """
 
 import sys
-from collections import OrderedDict
 
 if sys.version_info[:2] < (2, 7):
+    from ordereddict import OrderedDict
     import simplejson as json
 else:
+    from collections import OrderedDict
     import json
 
 if sys.version_info[:2] < (3, 0):
