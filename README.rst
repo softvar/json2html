@@ -161,6 +161,7 @@ Contributors
 	* Better error message on misbehaving input.
 	* Convert now accepts unicode and bytestrings for the keyword argument "json".
 	* Output now should always appear in the same order as input.
+	* Now supports JSON Lists (at top level).
 	* Python 3 support ; Added integration tests for Python 2.6, 3.4 and 3.5 such that support doesn't break.
 
 2. Daniel Lekic: `@lekic <https://github.com/lekic>`_
