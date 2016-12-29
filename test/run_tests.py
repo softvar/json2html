@@ -54,14 +54,6 @@ class TestJson2Html(unittest.TestCase):
 
             self.assertIn('Expecting property name', str(context.exception))
 
-    def test_dict_instead_of_list_exception(self, *args, **kwargs):
-        if sys.version_info[:2] >= (2, 7): #Python below 2.7 doesn't have assertRaises, ommitting these tests
-            _json = [{}]
-            with self.assertRaises(Exception) as context:
-                json2html.convert(json = _json)
-
-            self.assertIn('Sorry', str(context.exception))
-
     def test_all(self):
         for i in range(0, len(self.test_json)):
             _json = self.test_json[i]['json']
