@@ -1,4 +1,4 @@
-import os, sys
+import os, sys, re
 
 lib_path = os.path.abspath(os.path.join('..'))
 sys.path.append(lib_path)
@@ -17,9 +17,19 @@ class TestJson2Html(unittest.TestCase):
 
         for _file in self.jsonFiles:
             fpath = os.path.join(self.path + '/test', _file)
+            input_json = None
+            expected_output = None
+            with open('%s.json' % fpath, 'r') as f:
+                input_json = f.read()
+            with open('%s.txt' % fpath, 'r') as f:
+                expected_output = f.read()
             self.test_json.append({
-                'json': open('%s.json' % fpath).read(),
-                'output': open('%s.txt' % fpath).read(),
+                'json': input_json,
+                'output': re.sub(
+                    r"[\r\n\t]*",
+                    "",
+                    expected_output
+                )
             })
 
     def tearDown(self):

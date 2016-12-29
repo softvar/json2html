@@ -18,6 +18,7 @@ LICENSE: MIT
 """
 
 import sys
+from collections import OrderedDict
 
 if sys.version_info[:2] < (2, 7):
     import simplejson as json
@@ -56,7 +57,7 @@ class Json2Html:
         else:
             raise Exception("Please use json2html's convert function with a keyword argument 'json' - e.g. `json2html.convert(json={\"hello\":\"world!\"})`")
 
-        inputted_json = json.loads(self.json_input)
+        inputted_json = json.loads(self.json_input, object_pairs_hook=OrderedDict)
         if not isinstance(inputted_json, dict):
             raise ValueError("Sorry, but json2html requires a dict as the top level object of your JSON")
 

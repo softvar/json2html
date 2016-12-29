@@ -1,7 +1,9 @@
 language: python
 python:
+  - "2.6"
   - "2.7"
   - "3.4"
+  - "3.5"
 
 # command to run tests
-script: cd test/ && python run_tests.py && python3 run_tests.py
+script: cd test/ && python run_tests.py
