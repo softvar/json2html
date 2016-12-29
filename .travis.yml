@@ -5,5 +5,8 @@ python:
   - "3.4"
   - "3.5"
 
+# command to install dependencies
+install: "pip install ordereddict simplejson"
+
 # command to run tests
 script: cd test/ && python run_tests.py
