@@ -47,7 +47,7 @@ class TestJson2Html(unittest.TestCase):
         with self.assertRaises(Exception) as context:
             json2html.convert(json = _json)
 
-        self.assertIn('Not a valid JSON list', str(context.exception))
+        self.assertIn('Sorry', str(context.exception))
 
     def test_all(self):
         for i in range(0, len(self.test_json)):

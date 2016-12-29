@@ -57,6 +57,9 @@ class Json2Html:
             raise Exception("Please use json2html's convert function with a keyword argument 'json' - e.g. `json2html.convert(json={\"hello\":\"world!\"})`")
 
         inputted_json = json.loads(self.json_input)
+        if not isinstance(inputted_json, dict):
+            raise ValueError("Sorry, but json2html requires a dict as the top level object of your JSON")
+
         return self.iter_json(inputted_json)
 
     def column_headers_from_list_of_dicts(self, inputted_json):
