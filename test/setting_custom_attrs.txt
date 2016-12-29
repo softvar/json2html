@@ -1,1 +1,14 @@
-<table border="1"><tr><th>desription</th><td>converts json 2 html table format</td></tr><tr><th>name</th><td>Json2Html</td></tr><tr><th>language</th><td>python</td></tr></table>
+<table border="1">
+	<tr>
+		<th>name</th>
+		<td>Json2Html</td>
+	</tr>
+	<tr>
+		<th>language</th>
+		<td>python</td>
+	</tr>
+	<tr>
+		<th>desription</th>
+		<td>converts json 2 html table format</td>
+	</tr>
+</table>

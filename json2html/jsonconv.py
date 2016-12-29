@@ -20,42 +20,42 @@ LICENSE: MIT
 import sys
 
 if sys.version_info[:2] < (2, 7):
-    import simplejson as json
+    from ordereddict import OrderedDict
+    import simplejson as json_parser
 else:
-    import json
+    from collections import OrderedDict
+    import json as json_parser
 
+if sys.version_info[:2] < (3, 0):
+    text = unicode
+    text_types = [unicode, str]
+else:
+    text = str
+    text_types = [str]
 
 class Json2Html:
-
-    def convert(self, **kwargs):
+    def convert(self, json="", table_attributes='border="1"', clubbing=True):
         """
             Convert JSON to HTML Table format
         """
 
         # table attributes such as class, id, data-attr-*, etc.
         # eg: table_attributes = 'class = "table table-bordered sortable"'
-        global table_attributes
-        table_attributes = ''
+        self.table_init_markup = "<table %s>" % table_attributes
+        self.clubbing = clubbing
 
-        if 'table_attributes' in kwargs:
-            table_attributes = kwargs['table_attributes']
+        if not json:
+            json_input = {}
+        elif type(json) in text_types:
+            json_input = json_parser.loads(json, object_pairs_hook=OrderedDict)
         else:
-            # by default HTML table border
-            table_attributes = 'border="1"'
+            json_input = json
 
-        if 'json' in kwargs and kwargs['json']:
-            self.json_input = kwargs['json']
-            try:
-                json.loads(self.json_input)
-            except:
-                self.json_input = json.dumps(self.json_input)
-        else:
-            raise Exception("Please use json2html's convert function with a keyword argument 'json' - e.g. `json2html.convert(json={\"hello\":\"world!\"})`")
+        if isinstance(json_input, list):
+            return self.convert_list(json_input)
+        return self.convert_json(json_input)
 
-        inputted_json = json.loads(self.json_input)
-        return self.iter_json(inputted_json)
-
-    def column_headers_from_list_of_dicts(self, inputted_json):
+    def column_headers_from_list_of_dicts(self, json_input):
         """
             If suppose some key has array of objects and all the keys are same,
             instead of creating a new row for each such entry,
@@ -79,13 +79,11 @@ class Json2Html:
 
             @contributed by: @muellermichel
         """
-
-        if not inputted_json or not isinstance(inputted_json[0], dict):
+        if not json_input or not isinstance(json_input[0], dict):
             return None
 
-        column_headers = inputted_json[0].keys()
-
-        for entry in inputted_json:
+        column_headers = json_input[0].keys()
+        for entry in json_input:
             if not isinstance(entry, dict) or (len(entry.keys()) != len(column_headers)):
                 return None
             for header in column_headers:
@@ -93,66 +91,70 @@ class Json2Html:
                     return None
         return column_headers
 
-    def iter_json(self, inputted_json):
+    def convert_json(self, json_input):
         """
-            Iterate over the JSON and process it
+            Iterate over the JSON input and process it
+            to generate the super awesome HTML format
+        """
+        if type(json_input) in text_types + [int, float]:
+            return text(json_input)
+        if isinstance(json_input, list) and len(json_input) == 0:
+            return ''
+        if isinstance(json_input, list):
+            list_markup = '<ul><li>'
+            list_markup += '</li><li>'.join([self.convert_json(child) for child in json_input])
+            list_markup += '</li></ul>'
+            return list_markup
+        if isinstance(json_input, dict):
+            return self.convert_object(json_input)
+
+        # safety: don't do recursion over anything that we don't know about
+        # - iteritems() will most probably fail
+        return ''
+
+    def convert_list(self, list_input):
+        """
+            Iterate over the JSON list and process it
+            to generate either an HTML table or a HTML list, depending on what's inside.
+        """
+        converted_output = ""
+        column_headers = None
+        if self.clubbing:
+            column_headers = self.column_headers_from_list_of_dicts(list_input)
+        if column_headers is not None:
+            converted_output += self.table_init_markup
+            converted_output += '<tr><th>' + '</th><th>'.join(column_headers) + '</th></tr>'
+            for list_entry in list_input:
+                converted_output += '<tr><td>'
+                converted_output += '</td><td>'.join([self.convert_json(list_entry[column_header]) for column_header in
+                                                     column_headers])
+                converted_output += '</td></tr>'
+            converted_output += '</table>'
+        else:
+            converted_output += self.convert_json(list_input)
+        return converted_output
+
+    def convert_cell_content(self, cell_input):
+        """
+            Wrap content in <td> markup
+        """
+        return '<td>' + self.convert_json(cell_input) + '</td>'
+
+    def convert_object(self, json_input):
+        """
+            Iterate over the JSON object and process it
             to generate the super awesome HTML Table format
         """
-
-        def markup(entry):
-            """
-                Check for each value corresponding to its key
-                and return accordingly
-            """
-            if isinstance(entry, unicode):
-                return unicode(entry)
-            if isinstance(entry, int) or isinstance(entry, float):
-                return str(entry)
-            if isinstance(entry, list) and len(entry) == 0:
-                return ''
-            if isinstance(entry, list):
-                list_markup = '<ul><li>'
-                list_markup += '</li><li>'.join([markup(child) for child in entry])
-                list_markup += '</li></ul>'
-                return list_markup
-            if isinstance(entry, dict):
-                return self.iter_json(entry)
-
-            # safety: don't do recursion over anything that we don't know about
-            # - iteritems() will most probably fail
-            return ''
-
-        converted_output = ''
-
-        global table_attributes
-        table_init_markup = "<table %s>" % table_attributes
-        converted_output += table_init_markup
-
-        try:
-            for (k, v) in inputted_json.iteritems():
-                converted_output += '<tr><th>' + markup(k) + '</th>'
-
-                if v is None:
-                    v = unicode("")
-                if isinstance(v, list):
-                    column_headers = self.column_headers_from_list_of_dicts(v)
-                    if column_headers is not None:
-                        converted_output += '<td>'
-                        converted_output += table_init_markup
-                        converted_output += '<tr><th>' + '</th><th>'.join(column_headers) + '</th></tr>'
-                        for list_entry in v:
-                            converted_output += '<tr><td>'
-                            converted_output += '</td><td>'.join([markup(list_entry[column_header]) for column_header in
-                                                                 column_headers])
-                            converted_output += '</td></tr>'
-
-                        converted_output += '</table></td></tr>'
-                        continue
-                converted_output += '<td>' + markup(v) + '</td></tr>'
-            converted_output += '</table>'
-
-        except:
-            raise Exception('Not a valid JSON list')
+        converted_output = self.table_init_markup
+        for k, v in json_input.items():
+            converted_output += '<tr><th>' + self.convert_json(k) + '</th>'
+            if v is None:
+                v = text("")
+            if isinstance(v, list):
+                converted_output += self.convert_cell_content(self.convert_list(v)) + "</tr>"
+            else:
+                converted_output += self.convert_cell_content(v) + "</tr>"
+        converted_output += '</table>'
         return converted_output
 
 json2html = Json2Html()

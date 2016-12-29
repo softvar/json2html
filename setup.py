@@ -6,6 +6,7 @@ required = []
 
 if sys.version_info[:2] < (2,7):
     required.append('simplejson')
+    required.append('ordereddict')
 
 setup(
     name = 'json2html',
