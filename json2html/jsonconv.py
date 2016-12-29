@@ -27,8 +27,10 @@ else:
 
 if sys.version_info[:2] < (3, 0):
     text = unicode
+    text_types = [unicode, str]
 else:
     text = str
+    text_types = [str]
 
 class Json2Html:
 
@@ -48,18 +50,22 @@ class Json2Html:
             # by default HTML table border
             table_attributes = 'border="1"'
 
+        inputted_json = None
         if 'json' in kwargs and kwargs['json']:
             self.json_input = kwargs['json']
-            try:
-                json.loads(self.json_input)
-            except:
-                self.json_input = json.dumps(self.json_input)
+            if type(self.json_input) in text_types:
+                inputted_json = json.loads(self.json_input, object_pairs_hook=OrderedDict)
+            else:
+                inputted_json = self.json_input
         else:
-            raise Exception("Please use json2html's convert function with a keyword argument 'json' - e.g. `json2html.convert(json={\"hello\":\"world!\"})`")
+            raise ValueError("Please use json2html's convert function with a keyword argument 'json' - e.g. `json2html.convert(json={\"hello\":\"world!\"})`")
 
-        inputted_json = json.loads(self.json_input, object_pairs_hook=OrderedDict)
         if not isinstance(inputted_json, dict):
-            raise ValueError("Sorry, but json2html requires a dict as the top level object of your JSON")
+            raise ValueError(
+                "Sorry, but json2html requires a dict as the top level object of your JSON. Your toplevel object is a %s" %(
+                    str(type(inputted_json))
+                )
+            )
 
         return self.iter_json(inputted_json)
 
@@ -112,7 +118,7 @@ class Json2Html:
                 Check for each value corresponding to its key
                 and return accordingly
             """
-            if isinstance(entry, text):
+            if type(entry) in text_types:
                 return text(entry)
             if isinstance(entry, int) or isinstance(entry, float):
                 return str(entry)

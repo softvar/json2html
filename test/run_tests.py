@@ -46,11 +46,11 @@ class TestJson2Html(unittest.TestCase):
         self.assertIn("Please use json2html", str(context.exception))
 
     def test_invalid_json_exception(self, *args, **kwargs):
-        _json = {'name'}
-        with self.assertRaises(TypeError) as context:
+        _json = "{'name'}"
+        with self.assertRaises(ValueError) as context:
             json2html.convert(json = _json)
 
-        self.assertIn('is not JSON serializable', str(context.exception))
+        self.assertIn('Expecting property name', str(context.exception))
 
     def test_dict_instead_of_list_exception(self, *args, **kwargs):
         _json = [{}]
