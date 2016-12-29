@@ -204,7 +204,7 @@ Tested with Python 2.6, 2.7 3.4, and 3.5.
 Contributors
 ------------
 
-1. Michel Müller: [@muellermichel](https://github.com/muellermichel)
+1. Michel Mueller: [@muellermichel](https://github.com/muellermichel)
 	* Added support for clubbing Array of Objects with same keys, more readable format.
 	* Added support for adding custom `table_attributes`.
 	* Convert now accepts unicode and bytestrings for the keyword argument "json".
