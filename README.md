@@ -22,7 +22,7 @@ Python wrapper to convert `JSON` into a human readable `HTML Table` representati
 	will create only one row combining the results. This feature can be turned off by explicitly passing an argument `clunning = False`.
 
 * Generated table can be provided some `attributes` explicitly. Eg. giving an `id`, `class` or any `data-*` attribute.
-
+* Python 3 compatible
 
 ## Live Demo
 
@@ -175,6 +175,8 @@ Tests
 cd test/
 python run_tests.py
 ```
+
+Tested with Python 2.6, 2.7 3.4, and 3.5.
 
 ## Contributors
 
