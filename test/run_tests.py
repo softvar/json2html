@@ -35,16 +35,19 @@ class TestJson2Html(unittest.TestCase):
     def tearDown(self):
         pass
 
-    '''
-        Exception handling tests
-    '''
-    def test_empty_json_exception(self, *args, **kwargs):
-        if sys.version_info[:2] >= (2, 7): #Python below 2.7 doesn't have assertRaises, ommitting these tests
-            _json = ''
-            with self.assertRaises(Exception) as context:
-                json2html.convert(json = _json)
-
-            self.assertIn("Please use json2html", str(context.exception))
+    def test_empty_json(self, *args, **kwargs):
+        self.assertTrue(
+            json2html.convert(json = ""),
+            ""
+        )
+        self.assertTrue(
+            json2html.convert(json = []),
+            ""
+        )
+        self.assertTrue(
+            json2html.convert(json = {}),
+            ""
+        )
 
     def test_invalid_json_exception(self, *args, **kwargs):
         if sys.version_info[:2] >= (2, 7): #Python below 2.7 doesn't have assertRaises, ommitting these tests
@@ -57,9 +60,16 @@ class TestJson2Html(unittest.TestCase):
     def test_all(self):
         for i in range(0, len(self.test_json)):
             _json = self.test_json[i]['json']
-            output = json2html.convert(json = _json)
+            self.assertEqual(
+                json2html.convert(json = _json),
+                self.test_json[i]['output']
+            )
+            #testing whether we can call convert with a placed arg instead of keyword arg
+            self.assertEqual(
+                json2html.convert(_json),
+                self.test_json[i]['output']
+            )
 
-            self.assertEqual(str(output), self.test_json[i]['output'])
 
 if __name__ == '__main__':
     unittest.main()

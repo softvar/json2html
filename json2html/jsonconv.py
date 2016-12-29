@@ -21,10 +21,10 @@ import sys
 
 if sys.version_info[:2] < (2, 7):
     from ordereddict import OrderedDict
-    import simplejson as json
+    import simplejson as json_parser
 else:
     from collections import OrderedDict
-    import json
+    import json as json_parser
 
 if sys.version_info[:2] < (3, 0):
     text = unicode
@@ -35,30 +35,21 @@ else:
 
 class Json2Html:
 
-    def convert(self, **kwargs):
+    def convert(self, json="", table_attributes='border="1"'):
         """
             Convert JSON to HTML Table format
         """
 
         # table attributes such as class, id, data-attr-*, etc.
         # eg: table_attributes = 'class = "table table-bordered sortable"'
-        table_attributes = None
-        if 'table_attributes' in kwargs:
-            table_attributes = kwargs['table_attributes']
-        else:
-            # by default HTML table border
-            table_attributes = 'border="1"'
         self.table_init_markup = "<table %s>" % table_attributes
 
-        json_input = None
-        if 'json' in kwargs and kwargs['json']:
-            unvalidated_input = kwargs['json']
-            if type(unvalidated_input) in text_types:
-                json_input = json.loads(unvalidated_input, object_pairs_hook=OrderedDict)
-            else:
-                json_input = unvalidated_input
+        if not json:
+            json_input = {}
+        elif type(json) in text_types:
+            json_input = json_parser.loads(json, object_pairs_hook=OrderedDict)
         else:
-            raise ValueError("Please use json2html's convert function with a keyword argument 'json' - e.g. `json2html.convert(json={\"hello\":\"world!\"})`")
+            json_input = json
 
         if isinstance(json_input, list):
             return self.convert_list(json_input)
