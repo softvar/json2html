@@ -157,7 +157,9 @@ Contributors
 	* `Patch #2 <https://github.com/softvar/json2html/pull/2>`_
 	* Added support for clubbing Array of Objects with same keys, more readable format.
 	* Added support for adding custom `table_attributes`.
-	* Better error message on bad call of 'convert'
+	* Better error message on bad call of 'convert'.
+	* Output appears in the same order as input.
+	* Python 3 support ; Added integration tests for Python 2.6, 3.4 and 3.5 such that support doesn't break.
 
 2. Daniel Lekic: `@lekic <https://github.com/lekic>`_
 	* `Patch #17 <https://github.com/softvar/json2html/pull/17>`_
