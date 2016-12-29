@@ -24,6 +24,10 @@ if sys.version_info[:2] < (2, 7):
 else:
     import json
 
+if sys.version_info[:2] < (3, 0):
+    text = unicode
+else:
+    text = str
 
 class Json2Html:
 
@@ -104,8 +108,8 @@ class Json2Html:
                 Check for each value corresponding to its key
                 and return accordingly
             """
-            if isinstance(entry, unicode):
-                return unicode(entry)
+            if isinstance(entry, text):
+                return text(entry)
             if isinstance(entry, int) or isinstance(entry, float):
                 return str(entry)
             if isinstance(entry, list) and len(entry) == 0:
@@ -128,31 +132,28 @@ class Json2Html:
         table_init_markup = "<table %s>" % table_attributes
         converted_output += table_init_markup
 
-        try:
-            for (k, v) in inputted_json.iteritems():
-                converted_output += '<tr><th>' + markup(k) + '</th>'
+        for k, v in inputted_json.items():
+            converted_output += '<tr><th>' + markup(k) + '</th>'
 
-                if v is None:
-                    v = unicode("")
-                if isinstance(v, list):
-                    column_headers = self.column_headers_from_list_of_dicts(v)
-                    if column_headers is not None:
-                        converted_output += '<td>'
-                        converted_output += table_init_markup
-                        converted_output += '<tr><th>' + '</th><th>'.join(column_headers) + '</th></tr>'
-                        for list_entry in v:
-                            converted_output += '<tr><td>'
-                            converted_output += '</td><td>'.join([markup(list_entry[column_header]) for column_header in
-                                                                 column_headers])
-                            converted_output += '</td></tr>'
+            if v is None:
+                v = text("")
+            if isinstance(v, list):
+                column_headers = self.column_headers_from_list_of_dicts(v)
+                if column_headers is not None:
+                    converted_output += '<td>'
+                    converted_output += table_init_markup
+                    converted_output += '<tr><th>' + '</th><th>'.join(column_headers) + '</th></tr>'
+                    for list_entry in v:
+                        converted_output += '<tr><td>'
+                        converted_output += '</td><td>'.join([markup(list_entry[column_header]) for column_header in
+                                                             column_headers])
+                        converted_output += '</td></tr>'
 
-                        converted_output += '</table></td></tr>'
-                        continue
-                converted_output += '<td>' + markup(v) + '</td></tr>'
-            converted_output += '</table>'
+                    converted_output += '</table></td></tr>'
+                    continue
+            converted_output += '<td>' + markup(v) + '</td></tr>'
+        converted_output += '</table>'
 
-        except:
-            raise Exception('Not a valid JSON list')
         return converted_output
 
 json2html = Json2Html()
