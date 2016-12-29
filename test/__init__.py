@@ -6,5 +6,5 @@ Description - python wrapper for converting JSON to HTML Table format
 '''
 
 __author__ = 'Varun Malhotra'
-__version__ = '1.0.3'
+__version__ = '1.1.0'
 __license__ = 'MIT'
