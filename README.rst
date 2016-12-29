@@ -157,11 +157,10 @@ Contributors
 	* `Patch #2 <https://github.com/softvar/json2html/pull/2>`_
 	* Added support for clubbing Array of Objects with same keys, more readable format.
 	* Added support for adding custom `table_attributes`.
-	* Better error message on bad call of 'convert'.
-	* Better error message on misbehaving input.
 	* Convert now accepts unicode and bytestrings for the keyword argument "json".
 	* Output now should always appear in the same order as input.
 	* Now supports JSON Lists (at top level), including clubbing.
+	* Now supports empty inputs and positional arguments for convert.
 	* Python 3 support ; Added integration tests for Python 2.6, 3.4 and 3.5 such that support doesn't break.
 
 2. Daniel Lekic: `@lekic <https://github.com/lekic>`_
