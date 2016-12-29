@@ -60,6 +60,8 @@ class Json2Html:
         else:
             raise ValueError("Please use json2html's convert function with a keyword argument 'json' - e.g. `json2html.convert(json={\"hello\":\"world!\"})`")
 
+        if isinstance(json_input, list):
+            return self.convert_list(json_input)
         return self.convert_json(json_input)
 
     def column_headers_from_list_of_dicts(self, json_input):
