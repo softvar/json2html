@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os, sys, re
 
 lib_path = os.path.abspath(os.path.join('..'))
@@ -37,15 +38,15 @@ class TestJson2Html(unittest.TestCase):
         pass
 
     def test_empty_json(self, *args, **kwargs):
-        self.assertTrue(
+        self.assertEqual(
             json2html.convert(json = ""),
             ""
         )
-        self.assertTrue(
+        self.assertEqual(
             json2html.convert(json = []),
             ""
         )
-        self.assertTrue(
+        self.assertEqual(
             json2html.convert(json = {}),
             ""
         )
@@ -55,8 +56,47 @@ class TestJson2Html(unittest.TestCase):
             _json = "{'name'}"
             with self.assertRaises(ValueError) as context:
                 json2html.convert(json = _json)
-
             self.assertIn('Expecting property name', str(context.exception))
+
+    def test_funky_objects(self):
+        class objecty_class1(object):
+            pass
+        class objecty_class2(object):
+            def __repr__(self):
+                return u"blübidö"
+        class objecty_class3:
+            pass
+        class objecty_class4:
+            def __repr__(self):
+                return u"blübidöbidü"
+        objecty_the_funky_object1 = objecty_class1()
+        objecty_the_funky_object2 = objecty_class2()
+        objecty_the_funky_object3 = objecty_class3()
+        objecty_the_funky_object4 = objecty_class4()
+        funky_non_json_object = (
+            {"blib":(u"blüb", u"ـث‎"), u"ـث‎":1E-3},
+            "blub",
+            {
+                1: objecty_the_funky_object1,
+                2: objecty_the_funky_object2,
+                3: objecty_the_funky_object3,
+                4: objecty_the_funky_object4,
+            },
+            tuple([
+                objecty_the_funky_object1,
+                objecty_the_funky_object2,
+                objecty_the_funky_object3,
+                objecty_the_funky_object4
+            ])
+        )
+        converted = json2html.convert(funky_non_json_object)
+        self.assertTrue(u"ـث‎" in converted)
+        self.assertTrue(u"blüb" in converted)
+        self.assertTrue(u"blübidö" in converted)
+        self.assertTrue(u"blübidöbidü" in converted)
+        self.assertTrue(u"blübidöbidü" in converted)
+        self.assertTrue(u"objecty_class1" in converted)
+        self.assertTrue(u"objecty_class3" in converted)
 
     def test_all(self):
         for test_definition in self.test_json:
@@ -64,13 +104,13 @@ class TestJson2Html(unittest.TestCase):
             _clubbing = "no_clubbing" not in test_definition['filename']
             print("testing %s" %(test_definition['filename']))
             self.assertEqual(
-                json2html.convert(json = _json, clubbing=_clubbing),
-                test_definition['output']
+                json2html.convert(json = _json, clubbing=_clubbing, encode=True),
+                test_definition['output'].encode('ascii', 'xmlcharrefreplace')
             )
             #testing whether we can call convert with a positional args instead of keyword arg
             self.assertEqual(
-                json2html.convert(_json, clubbing=_clubbing),
-                test_definition['output']
+                json2html.convert(_json, clubbing=_clubbing, encode=True),
+                test_definition['output'].encode('ascii', 'xmlcharrefreplace')
             )
 
 

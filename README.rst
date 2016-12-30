@@ -162,6 +162,8 @@ Contributors
 	* Now supports JSON Lists (at top level), including clubbing.
 	* Now supports empty inputs and positional arguments for convert.
 	* Python 3 support ; Added integration tests for Python 2.6, 3.4 and 3.5 such that support doesn't break.
+	* Can now also do the proper encoding for you (disabled by default to not break backwards compatibility).
+	* Can now handle non-JSON objects on a best-effort principle.
 
 2. Daniel Lekic: `@lekic <https://github.com/lekic>`_
 	* `Patch #17 <https://github.com/softvar/json2html/pull/17>`_
