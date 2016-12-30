@@ -98,6 +98,84 @@ class TestJson2Html(unittest.TestCase):
         self.assertTrue(u"objecty_class1" in converted)
         self.assertTrue(u"objecty_class3" in converted)
 
+    def test_dictlike_objects(self):
+        class binary_dict(object):
+            def __init__(self, one, two):
+                self.one = one
+                self.two = two
+
+            def __getitem__(self, key):
+                if key not in self.keys():
+                    raise KeyError()
+                if key == "one":
+                    return self.one
+                return self.two
+
+            def __iter__(self):
+                yield self.one
+                yield self.two
+                raise StopIteration()
+
+            def __contains__(self, key):
+                return key in self.keys()
+
+            def keys(self):
+                return ("one", "two")
+
+            def items(self):
+                return [(k, self[k]) for k in self.keys()]
+
+        #single object
+        self.assertEqual(
+            json2html.convert(binary_dict([1, 2], u"blübi")),
+            u'<table border="1"><tr><th>one</th><td><ul><li>1</li><li>2</li></ul></td></tr><tr><th>two</th><td>blübi</td></tr></table>'
+        )
+        #clubbed with single element
+        self.assertEqual(
+            json2html.convert([binary_dict([1, 2], u"blübi")]),
+            u'<table border="1"><tr><th>one</th><th>two</th></tr><tr><td><ul><li>1</li><li>2</li></ul></td><td>blübi</td></tr></table>'
+        )
+        #clubbed with two elements
+        self.assertEqual(
+            json2html.convert([
+                binary_dict([1, 2], u"blübi"),
+                binary_dict("foo", "bar")
+            ]),
+            u'<table border="1"><tr><th>one</th><th>two</th></tr><tr><td><ul><li>1</li><li>2</li></ul></td><td>blübi</td></tr><tr><td>foo</td><td>bar</td></tr></table>'
+        )
+        #not clubbed, second element has different keys
+        self.assertEqual(
+            json2html.convert([
+                binary_dict([1, 2], u"blübi"),
+                {"three":3}
+            ]),
+            u'<ul><li><table border="1"><tr><th>one</th><td><ul><li>1</li><li>2</li></ul></td></tr><tr><th>two</th><td>blübi</td></tr></table></li><li><table border="1"><tr><th>three</th><td>3</td></tr></table></li></ul>'
+        )
+
+    def test_listlike_objects(self):
+        class binary_tuple(object):
+            def __init__(self, one, two):
+                self.one = one
+                self.two = two
+
+            def __getitem__(self, key):
+                if key == 0:
+                    return self.one
+                if key == 1:
+                    return self.two
+                raise KeyError()
+
+            def __iter__(self):
+                yield self.one
+                yield self.two
+                return
+
+        #single object
+        self.assertEqual(
+            json2html.convert(binary_tuple([1, 2], u"blübi")),
+            u'<ul><li><ul><li>1</li><li>2</li></ul></li><li>blübi</li></ul>'
+        )
+
     def test_all(self):
         for test_definition in self.test_json:
             _json = test_definition['json']
