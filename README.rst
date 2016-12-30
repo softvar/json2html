@@ -51,7 +51,9 @@ Argument              Description
 --------------------- ----------------
 `table_attributes`    `id="info-table"`/`class="bootstrap-class"`/`data-*` attributes can be applied to the generated table
 --------------------- ----------------
-`clubbing`            turn clubbing of list with same keys of a dict / Array of objects with same key
+`clubbing`            turn on[default]/off clubbing of list with same keys of a dict / Array of objects with same key
+--------------------- ----------------
+`encode`              turn on/off[default] encoding of result to escaped html, compatible with any browser
 ===================== ================
 
 Installation
