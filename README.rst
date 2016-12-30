@@ -47,7 +47,7 @@ List of valid arguments
 ===================== ================
 Argument              Description
 --------------------- ----------------
-`json`                a valid JSON
+`json`                a valid JSON; This can either be a string in valid JSON format or a python object that is either dict-like or list-like at the top level.
 --------------------- ----------------
 `table_attributes`    e.g. pass `id="info-table"` or `class="bootstrap-class"`/`data-*` to apply these attributes to the generated table
 --------------------- ----------------
