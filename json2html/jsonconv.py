@@ -138,12 +138,6 @@ class Json2Html:
         converted_output += '</li><li>'.join([self.convert_json_node(child) for child in list_input])
         converted_output += '</li></ul>'
         return converted_output
-        
-    def convert_cell_content(self, cell_input):
-        """
-            Wrap content in <td> markup
-        """
-        return '<td>' + self.convert_json_node(cell_input) + '</td>'
 
     def convert_object(self, json_input):
         """
@@ -154,9 +148,9 @@ class Json2Html:
             return "" #avoid empty tables
         converted_output = self.table_init_markup + "<tr>"
         converted_output += "</tr><tr>".join([
-            "<th>%s</th>%s" %(
+            "<th>%s</th><td>%s</td>" %(
                 self.convert_json_node(k),
-                self.convert_cell_content(self.convert_json_node(v)),
+                self.convert_json_node(v)
             )
             for k, v in json_input.items()
         ])
