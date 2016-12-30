@@ -42,14 +42,14 @@ Live Demo
 List of valid arguments
 -----------------------
 
-``json2html.convert`` - The module's ``convert`` method accepts three different types of arguments being passed.
+``json2html.convert`` - The module's ``convert`` method accepts the following arguments:
 
 ===================== ================
 Argument              Description
 --------------------- ----------------
 `json`                a valid JSON
 --------------------- ----------------
-`table_attributes`    `id="info-table"`/`class="bootstrap-class"`/`data-*` attributes can be applied to the generated table
+`table_attributes`    e.g. pass `id="info-table"` or `class="bootstrap-class"`/`data-*` to apply these attributes to the generated table
 --------------------- ----------------
 `clubbing`            turn on[default]/off clubbing of list with same keys of a dict / Array of objects with same key
 --------------------- ----------------
