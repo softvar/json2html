@@ -16,24 +16,52 @@ Python wrapper to convert ``JSON`` into a human readable ``HTML Table`` represen
 Features
 --------
 
-1. User-friendly Table fomat - easy to read and show.
-2. If any value of some key is array of objects, and all keys of all those objects are same, it will auto-club them instead of creating a new row for each Object within Array. For eg: ```jsonObject = {"sampleData": [ {"a":1, "b":2, "c":3}, {"a":5, "b":6, "c":7} ] }```
-3. Easy to style for different purposes. Pass table attributes so that generated Table can have custom attributes like class, etc..
+* User friendly tablular fomat, easy to read and share.
+* If value of the key is array of objects and all the keys are same(value of the key is a dict of list), the module will club by default. Eg.
 
+.. code-block:: bash
+
+	input = {
+		"sampleData": [{
+			"a":1, "b":2, "c":3
+		}, {
+			"a":5, "b":6, "c":7
+		}]
+	}
+
+	will create only one row combining the results. This feature can be turned off by explicitly passing an argument ``clubbing = False``.
+
+* Generated table can be provided some ``attributes`` explicitly. Eg. giving an ``id``, ``class`` or any ``data-*`` attribute.
+* Python 3 compatible
 
 Live Demo
----------
+----------
 
-Visit `Online json2html Convertor <http://json2html.varunmalhotra.xyz/>`_
+`Click here <http://json2html.varunmalhotra.xyz/>`_ for the online demo.
+
+List of valid arguments
+-----------------------
+
+``json2html.convert`` - The module's ``convert`` method accepts three different types of arguments being passed.
+
+===================== ================
+Argument              Description
+--------------------- ----------------
+`json`                a valid JSON
+--------------------- ----------------
+`table_attributes`    `id="info-table"`/`class="bootstrap-class"`/`data-*` attributes can be applied to the generated table
+--------------------- ----------------
+`clubbing`            turn clubbing of list with same keys of a dict / Array of objects with same key
+===================== ================
 
 Installation
--------------
+------------
 
 .. code-block:: bash
 
 	$ pip install json2html
 
-Or, Download `here <https://github.com/softvar/json2html/tarball/0.3>`_ and run ``python setup.py install`` after changing directory to `/json2html`
+Or, Download [here](https://github.com/softvar/json2html/releases) and run `python setup.py install` after changing directory to `/json2html`
 
 Example Usage
 -------------
@@ -43,39 +71,54 @@ Example Usage
 .. code-block:: python
 
 	from json2html import *
-	json2html.convert(json = {'name':'softvar','age':'22'})
+	input = {
+		"name": "json2html",
+		"description": "Converts JSON to HTML tabular representation"
+	}
+	json2html.convert(json = input)
 
 Output:
 
 .. code-block:: bash
 
-	<table border="1"><tr><th>age</th><td>22</td></tr><tr><th>name</th><td>softvar</td></tr></table>
+	<table border="1"><tr><th>name</th><td>json2html</td></tr><tr><th>description</th><td>converts JSON to HTML tabular representation</td></tr></table>
 
-=====  =====
-age    22
-name   softvar
-=====  =====
+============ ========================================================
+name         json2html
+------------ --------------------------------------------------------
+description  Converts JSON to HTML tabular representation
+============ ========================================================
 
 **Example 2:** Setting custom attributes to table
 
 .. code-block:: python
 
 	from json2html import *
-	json2html.convert(json = {'name':'softvar','age':'22'}, table_attributes="class=\"table table-bordered table-hover\"")
+	input = {
+		"name": "json2html",
+		"description": "Converts JSON to HTML tabular representation"
+	}
+	json2html.convert(json = input, table_attributes="id=\"info-table\" class=\"table table-bordered table-hover\"")
 
 Output:
 
 .. code-block:: bash
 
-	<table class="table table-bordered table-hover"><tr><th>age</th><td>22</td></tr><tr><th>name</th><td>softvar</td></tr></table>
+	<table id="info-table" class="table table-bordered table-hover"><tr><th>name</th><td>json2html</td></tr><tr><th>description</th><td>Converts JSON to HTML tabular representation</td></tr></table>
 
 **Example 3:** Clubbing same keys of: Array of Objects
 
 .. code-block:: python
 
 	from json2html import *
-	_json2conv = {"sample": [ {"a":1, "b":2, "c":3}, {"a":5, "b":6, "c":7} ] }
-	json2html.convert(json = _json2conv)
+	input = {
+		"sample": [{
+			"a":1, "b":2, "c":3
+		}, {
+			"a":5, "b":6, "c":7
+		}]
+	}
+	json2html.convert(json = input)
 
 Output:
 
@@ -83,21 +126,27 @@ Output:
 
 	<table border="1"><tr><th>sample</th><td><table border="1"><tr><th>a</th><th>c</th><th>b</th></tr><tr><td>1</td><td>3</td><td>2</td></tr><tr><td>5</td><td>7</td><td>6</td></tr></table></td></tr></table>
 
-=====  =====  =====
-a      c      b
-=====  =====  =====
-1      3      2
------  -----  -----
-5      7      6
-=====  =====  =====
+======== ======= =======
+  a         c      b
+-------- ------- -------
+   1        3       2
+-------- ------- -------
+   5        7       6
+======== ======= =======
 
 **Example 4:** Each row for different key(s) of: Array of Objects
 
 .. code-block:: python
 
 	from json2html import *
-	_json2conv = {"sample": [ {"a":1, "b":2, "c":3}, {"1a1":5, "1b1":6, "c":7} ] }
-	json2html.convert(json = _json2conv)
+	input = {
+		"sample": [{
+			"a":1, "b":2, "c":3
+		}, {
+			"1a1":5, "1b1":6, "c":7
+		}]
+	}
+	json2html.convert(json = input)
 
 Output:
 
@@ -111,7 +160,7 @@ Output:
 
 	from json2html import *
 
-	_json2conv = {
+	input = {
 		"glossary": {
 			"title": "example glossary",
 			"GlossDiv": {
@@ -134,7 +183,7 @@ Output:
 		}
 	}
 
-	json2html.convert(json = _json2conv)
+	json2html.convert(json = input)
 
 Output:
 
@@ -150,11 +199,12 @@ Tests
 	cd test/
 	python run_tests.py
 
+Tested with Python 2.6, 2.7 3.4, and 3.5.
+
 Contributors
 ------------
 
-1. Michel Müller: `@muellermichel <https://github.com/muellermichel>`_
-	* `Patch #2 <https://github.com/softvar/json2html/pull/2>`_
+1. Michel Mueller: [@muellermichel](https://github.com/muellermichel)
 	* Added support for clubbing Array of Objects with same keys, more readable format.
 	* Added support for adding custom `table_attributes`.
 	* Convert now accepts unicode and bytestrings for the keyword argument "json".
@@ -165,9 +215,19 @@ Contributors
 	* Can now also do the proper encoding for you (disabled by default to not break backwards compatibility).
 	* Can now handle non-JSON objects on a best-effort principle.
 
-2. Daniel Lekic: `@lekic <https://github.com/lekic>`_
-	* `Patch #17 <https://github.com/softvar/json2html/pull/17>`_
+2. Daniel Lekic: [@lekic](https://github.com/lekic)
 	* Fixed issue with one-item lists not rendering correctly.
 	* General code cleanup, fixed all naming conventions and coding standards to adhere to PEP8 conventions.
 
-Patches are highly welcomed.
+Copyright and License
+---------------------
+
+	The `MIT license <https://opensource.org/licenses/MIT>`_
+
+	Copyright (c) 2014-2017 Varun Malhotra
+
+	Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+	The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
