@@ -65,7 +65,7 @@ class Json2Html:
         column_headers = json_input[0].keys()
         for entry in json_input:
             if not hasattr(entry, 'keys') \
-            or not hasattr(entry, '__getitem__') \
+            or not hasattr(entry, '__iter__') \
             or len(entry.keys()) != len(column_headers):
                 return None
             for header in column_headers:
@@ -85,7 +85,7 @@ class Json2Html:
             return text(json_input)
         if hasattr(json_input, 'items'):
             return self.convert_object(json_input)
-        if hasattr(json_input, '__iter__'):
+        if hasattr(json_input, '__iter__') and hasattr(json_input, '__getitem__'):
             return self.convert_list(json_input)
         return text(json_input)
 
