@@ -59,8 +59,8 @@ class Json2Html:
             It tries to come up with column headers for your input
         """
         if not json_input \
-        or not hasattr(json_input[0], 'keys') \
-        or not hasattr(json_input[0], '__getitem__'):
+        or not hasattr(json_input, '__getitem__') \
+        or not hasattr(json_input[0], 'keys'):
             return None
         column_headers = json_input[0].keys()
         for entry in json_input:
