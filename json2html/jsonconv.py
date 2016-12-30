@@ -42,6 +42,7 @@ class Json2Html:
         # eg: table_attributes = 'class = "table table-bordered sortable"'
         self.table_init_markup = "<table %s>" % table_attributes
         self.clubbing = clubbing
+        json_input = None
         if not json:
             json_input = {}
         elif type(json) in text_types:
