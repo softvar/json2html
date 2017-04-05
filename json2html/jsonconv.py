@@ -96,7 +96,7 @@ class Json2Html:
             Iterate over the JSON input and process it
             to generate the super awesome HTML format
         """
-        if type(json_input) in text_types + [int, float]:
+        if type(json_input) in text_types + [int, float, bool]:
             return text(json_input)
         if isinstance(json_input, list) and len(json_input) == 0:
             return ''
