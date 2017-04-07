@@ -82,7 +82,7 @@ class Json2Html:
             of funky objects to json2html that *behave* like dicts and lists and other 
             basic JSON types.
         """
-        if type(json_input) in text_types + [int, float]:
+        if type(json_input) in text_types:
             return text(json_input)
         if hasattr(json_input, 'items'):
             return self.convert_object(json_input)
