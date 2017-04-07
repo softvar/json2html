@@ -176,6 +176,18 @@ class TestJson2Html(unittest.TestCase):
             u'<ul><li><ul><li>1</li><li>2</li></ul></li><li>blübi</li></ul>'
         )
 
+    def test_bool(self):
+        self.assertEqual(
+            json2html.convert(True),
+            u'True'
+        )
+
+    def test_none(self):
+        self.assertEqual(
+            json2html.convert(None),
+            u''
+        )
+
     def test_all(self):
         for test_definition in self.test_json:
             _json = test_definition['json']
