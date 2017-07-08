@@ -42,16 +42,18 @@ Live Demo
 List of valid arguments
 -----------------------
 
-``json2html.convert`` - The module's ``convert`` method accepts three different types of arguments being passed.
+``json2html.convert`` - The module's ``convert`` method accepts the following arguments:
 
 ===================== ================
 Argument              Description
 --------------------- ----------------
-`json`                a valid JSON
+`json`                a valid JSON; This can either be a string in valid JSON format or a python object that is either dict-like or list-like at the top level.
 --------------------- ----------------
-`table_attributes`    `id="info-table"`/`class="bootstrap-class"`/`data-*` attributes can be applied to the generated table
+`table_attributes`    e.g. pass `id="info-table"` or `class="bootstrap-class"`/`data-*` to apply these attributes to the generated table
 --------------------- ----------------
-`clubbing`            turn clubbing of list with same keys of a dict / Array of objects with same key
+`clubbing`            turn on[default]/off clubbing of list with same keys of a dict / Array of objects with same key
+--------------------- ----------------
+`encode`              turn on/off[default] encoding of result to escaped html, compatible with any browser
 ===================== ================
 
 Installation
@@ -212,6 +214,8 @@ Contributors
 	* Now supports JSON Lists (at top level), including clubbing.
 	* Now supports empty inputs and positional arguments for convert.
 	* Python 3 support ; Added integration tests for Python 2.6, 3.4 and 3.5 such that support doesn't break.
+	* Can now also do the proper encoding for you (disabled by default to not break backwards compatibility).
+	* Can now handle non-JSON objects on a best-effort principle.
 
 2. Daniel Lekic: [@lekic](https://github.com/lekic)
 	* Fixed issue with one-item lists not rendering correctly.
