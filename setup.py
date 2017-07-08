@@ -18,13 +18,9 @@ setup(
     author = 'Varun Malhotra',
     author_email = 'varun2902@gmail.com',
     url = 'https://github.com/softvar/json2html',
-    download_url = 'https://github.com/softvar/json2html/tarball/1.1.1',
+    download_url = 'https://github.com/softvar/json2html/tarball/1.2.0',
     keywords = ['json', 'HTML', 'Table'],
     license = 'MIT',
     classifiers = (
-        "Programming Language :: Python",
-        "Programming Language :: Python :: 2.5",
-        "Programming Language :: Python :: 2.6",
-        "Programming Language :: Python :: 2.7",
     ),
 )
