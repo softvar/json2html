@@ -11,7 +11,7 @@ if sys.version_info[:2] < (2,7):
 setup(
     name = 'json2html',
     packages = ['json2html'],
-    version = '1.1.1',
+    version = '1.2.0',
     install_requires=required,
     description = 'JSON to HTML Table Representation',
     long_description=open('README.rst').read(),
