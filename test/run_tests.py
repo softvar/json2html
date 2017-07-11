@@ -193,6 +193,10 @@ class TestJson2Html(unittest.TestCase):
             json2html.convert("<script></script>"),
             u"&lt;script&gt;&lt;/script&gt;"
         )
+        self.assertEqual(
+            json2html.convert("<script></script>", escape=False),
+            u"<script></script>"
+        )
 
     def test_all(self):
         for test_definition in self.test_json:
