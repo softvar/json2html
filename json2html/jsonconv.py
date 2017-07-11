@@ -17,7 +17,7 @@ LICENSE: MIT
 --------
 """
 
-import sys
+import sys, cgi
 
 if sys.version_info[:2] < (2, 7):
     from ordereddict import OrderedDict
@@ -34,7 +34,7 @@ else:
     text_types = [str]
 
 class Json2Html:
-    def convert(self, json="", table_attributes='border="1"', clubbing=True, encode=False):
+    def convert(self, json="", table_attributes='border="1"', clubbing=True, encode=False, escape=True):
         """
             Convert JSON to HTML Table format
         """
@@ -42,6 +42,7 @@ class Json2Html:
         # eg: table_attributes = 'class = "table table-bordered sortable"'
         self.table_init_markup = "<table %s>" % table_attributes
         self.clubbing = clubbing
+        self.escape = escape
         json_input = None
         if not json:
             json_input = {}
@@ -56,7 +57,7 @@ class Json2Html:
 
     def column_headers_from_list_of_dicts(self, json_input):
         """
-            This method is required to implement clubbing. 
+            This method is required to implement clubbing.
             It tries to come up with column headers for your input
         """
         if not json_input \
@@ -78,12 +79,15 @@ class Json2Html:
         """
             Dispatch JSON input according to the outermost type and process it
             to generate the super awesome HTML format.
-            We try to adhere to duck typing such that users can just pass all kinds 
-            of funky objects to json2html that *behave* like dicts and lists and other 
+            We try to adhere to duck typing such that users can just pass all kinds
+            of funky objects to json2html that *behave* like dicts and lists and other
             basic JSON types.
         """
         if type(json_input) in text_types:
-            return text(json_input)
+            if self.escape:
+                return cgi.escape(text(json_input))
+            else:
+                return text(json_input)
         if hasattr(json_input, 'items'):
             return self.convert_object(json_input)
         if hasattr(json_input, '__iter__') and hasattr(json_input, '__getitem__'):
