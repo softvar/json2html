@@ -47,7 +47,15 @@ class Json2Html:
         if not json:
             json_input = {}
         elif type(json) in text_types:
-            json_input = json_parser.loads(json, object_pairs_hook=OrderedDict)
+            try:
+                json_input = json_parser.loads(json, object_pairs_hook=OrderedDict)
+            except ValueError as e:
+                #so the string passed here is actually not a json string
+                # - let's analyze whether we want to pass on the error or use the string as-is as a text node
+                if u"Expecting property name" in text(e):
+                    #if this specific json loads error is raised, then the user probably actually wanted to pass json, but made a mistake
+                    raise e
+                json_input = json
         else:
             json_input = json
         converted = self.convert_json_node(json_input)
