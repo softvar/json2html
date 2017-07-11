@@ -28,10 +28,10 @@ else:
 
 if sys.version_info[:2] < (3, 0):
     text = unicode
-    text_types = [unicode, str]
+    text_types = (unicode, str)
 else:
     text = str
-    text_types = [str]
+    text_types = (str,)
 
 class Json2Html:
     def convert(self, json="", table_attributes='border="1"', clubbing=True, encode=False, escape=True):
