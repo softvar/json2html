@@ -188,13 +188,23 @@ class TestJson2Html(unittest.TestCase):
             u''
         )
 
+    def test_xss(self):
+        self.assertEqual(
+            json2html.convert("<script></script>"),
+            u"&lt;script&gt;&lt;/script&gt;"
+        )
+        self.assertEqual(
+            json2html.convert("<script></script>", escape=False),
+            u"<script></script>"
+        )
+
     def test_all(self):
         for test_definition in self.test_json:
             _json = test_definition['json']
             _clubbing = "no_clubbing" not in test_definition['filename']
             print("testing %s" %(test_definition['filename']))
             self.assertEqual(
-                json2html.convert(json = _json, clubbing=_clubbing, encode=True),
+                json2html.convert(json=_json, clubbing=_clubbing, encode=True),
                 test_definition['output'].encode('ascii', 'xmlcharrefreplace')
             )
             #testing whether we can call convert with a positional args instead of keyword arg
