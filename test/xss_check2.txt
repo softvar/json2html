@@ -1,0 +1,1 @@
+<table border="1"><tr><th>blub</th><td>&lt;script&gt;&lt;/script&gt;</td></tr></table>

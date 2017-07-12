@@ -54,6 +54,8 @@ Argument              Description
 `clubbing`            turn on[default]/off clubbing of list with same keys of a dict / Array of objects with same key
 --------------------- ----------------
 `encode`              turn on/off[default] encoding of result to escaped html, compatible with any browser
+--------------------- ----------------
+`escape`              turn on[default]/off escaping of html tags in text nodes (prevents XSS attacks in case you pass untrusted data to json2html)
 ===================== ================
 
 Installation
@@ -216,6 +218,7 @@ Contributors
 	* Python 3 support ; Added integration tests for Python 2.6, 3.4 and 3.5 such that support doesn't break.
 	* Can now also do the proper encoding for you (disabled by default to not break backwards compatibility).
 	* Can now handle non-JSON objects on a best-effort principle.
+	* Now by default escapes html in text nodes to prevent XSS attacks.
 
 2. Daniel Lekic: [@lekic](https://github.com/lekic)
 	* Fixed issue with one-item lists not rendering correctly.
