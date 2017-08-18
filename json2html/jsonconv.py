@@ -136,13 +136,17 @@ class Json2Html:
             column_headers = self.column_headers_from_list_of_dicts(list_input)
         if column_headers is not None:
             converted_output += self.table_init_markup
+            converted_output += '<thead>'
             converted_output += '<tr><th>' + '</th><th>'.join(column_headers) + '</th></tr>'
+            converted_output += '</thead>'
+            converted_output += '<tbody>'
             for list_entry in list_input:
                 converted_output += '<tr><td>'
                 converted_output += '</td><td>'.join([self.convert_json_node(list_entry[column_header]) for column_header in
                                                      column_headers])
                 converted_output += '</td></tr>'
             converted_output += '</table>'
+            converted_output += '</tbody>'
             return converted_output
 
         #so you don't want or need clubbing eh? This makes @muellermichel very sad... ;(
