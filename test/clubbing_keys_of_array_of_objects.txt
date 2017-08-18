@@ -3,21 +3,25 @@
 		<th>sample</th>
 		<td>
 			<table border="1">
-				<tr>
-					<th>name</th>
-					<th>desc</th>
-					<th>lang</th>
-				</tr>
-				<tr>
-					<td>json2html</td>
-					<td>coverts json 2 html table format</td>
-					<td>python</td>
-				</tr>
-				<tr>
-					<td>testing</td>
-					<td>clubbing same keys of array of objects</td>
-					<td>python</td>
-				</tr>
+				<thead>
+					<tr>
+						<th>name</th>
+						<th>desc</th>
+						<th>lang</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>json2html</td>
+						<td>coverts json 2 html table format</td>
+						<td>python</td>
+					</tr>
+					<tr>
+						<td>testing</td>
+						<td>clubbing same keys of array of objects</td>
+						<td>python</td>
+					</tr>
+				</tbody>
 			</table>
 		</td>
 	</tr>
