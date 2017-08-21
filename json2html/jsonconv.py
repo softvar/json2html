@@ -151,7 +151,7 @@ class Json2Html:
             )
             return '%s%s%s</table>' %(self.table_init_markup, header, body)
 
-        #no clubbing required here - columnb headers are not consistent across list
+        #no clubbing required here - column headers are not consistent across list
         return '<ul><li>%s</li></ul>' %(
             '</li><li>'.join([self.convert_json_node(child) for child in list_input])
         )
