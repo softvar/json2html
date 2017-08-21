@@ -135,11 +135,7 @@ class Json2Html:
         if self.clubbing:
             column_headers = self.column_headers_from_list_of_dicts(list_input)
         if column_headers is not None:
-            header = (
-                '<thead>'
-                '<tr><th>%s</th></tr>'
-                '</thead>'
-            ) %('</th><th>'.join(column_headers))
+            header = '<thead><tr><th>%s</th></tr></thead>' %('</th><th>'.join(column_headers))
             body = '<tbody>%s</tbody>' %(
                 '<tr>%s</tr>' %('</tr><tr>'.join([
                     '<td>%s</td>' %('</td><td>'.join([
