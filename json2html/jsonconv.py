@@ -139,18 +139,13 @@ class Json2Html:
                 '<tr><th>%s</th></tr>'
                 '</thead>'
             ) %('</th><th>'.join(column_headers))
-            body = (
-                '<tbody>'
-                '<tr><td>%s</td></tr>'
-                '</tbody>'
-            ) %(
-                '<tr></tr>'.join([
-                    '</td><td>'.join([
+            body = '<tbody>%s</tbody>' %(
+                '<tr>%s</tr>' %('</tr><tr>'.join([(
+                    '<td>%s</td>' %('</td><td>'.join([
                         self.convert_json_node(list_entry[column_header])
                         for column_header in column_headers
-                    ])
-                    for list_entry in list_input
-                ])
+                    ]))
+                ) for list_entry in list_input]))
             )
             return '%s%s%s</table>' %(self.table_init_markup, header, body)
 
