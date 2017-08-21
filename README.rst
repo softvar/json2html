@@ -128,7 +128,7 @@ Output:
 
 .. code-block:: bash
 
-	<table border="1"><tr><th>sample</th><td><table border="1"><tr><th>a</th><th>c</th><th>b</th></tr><tr><td>1</td><td>3</td><td>2</td></tr><tr><td>5</td><td>7</td><td>6</td></tr></table></td></tr></table>
+	<table border="1"><tr><th>sample</th><td><table border="1"><thead><tr><th>b</th><th>c</th><th>a</th></tr></thead><tbody><tr><td>2</td><td>3</td><td>1</td></tr><tr><td>6</td><td>7</td><td>5</td></tr></tbody></table></td></tr></table>
 
 ======== ======= =======
   a         c      b
@@ -223,6 +223,9 @@ Contributors
 2. Daniel Lekic: [@lekic](https://github.com/lekic)
 	* Fixed issue with one-item lists not rendering correctly.
 	* General code cleanup, fixed all naming conventions and coding standards to adhere to PEP8 conventions.
+
+3. Kyle Smith: [@smithk86](https://github.com/smithk86)
+    * Added thead and tbody tags to group header and content rows when creating a table from an array of objects.
 
 Copyright and License
 ---------------------
