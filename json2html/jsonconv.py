@@ -163,15 +163,15 @@ class Json2Html:
         """
         if not json_input:
             return "" #avoid empty tables
-        converted_output = self.table_init_markup + "<tr>"
-        converted_output += "</tr><tr>".join([
-            "<th>%s</th><td>%s</td>" %(
-                self.convert_json_node(k),
-                self.convert_json_node(v)
-            )
-            for k, v in json_input.items()
-        ])
-        converted_output += '</tr></table>'
-        return converted_output
+        return "%s<tr>%s</tr></table>" %(
+            self.table_init_markup,
+            "</tr><tr>".join([
+                "<th>%s</th><td>%s</td>" %(
+                    self.convert_json_node(k),
+                    self.convert_json_node(v)
+                )
+                for k, v in json_input.items()
+            ])
+        )
 
 json2html = Json2Html()
