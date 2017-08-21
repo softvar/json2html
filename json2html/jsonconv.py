@@ -131,23 +131,42 @@ class Json2Html:
         if not list_input:
             return ""
         converted_output = ""
-        column_headers = None
         if self.clubbing:
             column_headers = self.column_headers_from_list_of_dicts(list_input)
         if column_headers is not None:
-            converted_output += self.table_init_markup
-            converted_output += '<thead>'
-            converted_output += '<tr><th>' + '</th><th>'.join(column_headers) + '</th></tr>'
-            converted_output += '</thead>'
-            converted_output += '<tbody>'
-            for list_entry in list_input:
-                converted_output += '<tr><td>'
-                converted_output += '</td><td>'.join([self.convert_json_node(list_entry[column_header]) for column_header in
-                                                     column_headers])
-                converted_output += '</td></tr>'
-            converted_output += '</tbody>'
-            converted_output += '</table>'
-            return converted_output
+            header = (
+                '<thead>'
+                '<tr><th>%s</th></tr>'
+                '</thead>'
+            ) %('</th><th>'.join(column_headers))
+            body = (
+                '<tbody>'
+                '<tr><td>%s</td></tr>'
+                '</tbody>'
+            ) %(
+                '<tr></tr>'.join([
+                    '</td><td>'.join([
+                        self.convert_json_node(list_entry[column_header])
+                        for column_header in column_headers
+                    ])
+                    for list_entry in list_input
+                ])
+            )
+            return '%s%s%s</table>' %(self.table_init_markup, header, body)
+
+            # converted_output += self.table_init_markup
+            # converted_output += '<thead>'
+            # converted_output += '<tr><th>' + '</th><th>'.join(column_headers) + '</th></tr>'
+            # converted_output += '</thead>'
+            # converted_output += '<tbody>'
+            # for list_entry in list_input:
+            #     converted_output += '<tr><td>'
+            #     converted_output += '</td><td>'.join([self.convert_json_node(list_entry[column_header]) for column_header in
+            #                                          column_headers])
+            #     converted_output += '</td></tr>'
+            # converted_output += '</tbody>'
+            # converted_output += '</table>'
+            # return converted_output
 
         #so you don't want or need clubbing eh? This makes @muellermichel very sad... ;(
         #alright, let's fall back to a basic list here...
