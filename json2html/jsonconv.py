@@ -131,6 +131,7 @@ class Json2Html:
         if not list_input:
             return ""
         converted_output = ""
+        column_headers = None
         if self.clubbing:
             column_headers = self.column_headers_from_list_of_dicts(list_input)
         if column_headers is not None:
@@ -140,35 +141,20 @@ class Json2Html:
                 '</thead>'
             ) %('</th><th>'.join(column_headers))
             body = '<tbody>%s</tbody>' %(
-                '<tr>%s</tr>' %('</tr><tr>'.join([(
+                '<tr>%s</tr>' %('</tr><tr>'.join([
                     '<td>%s</td>' %('</td><td>'.join([
                         self.convert_json_node(list_entry[column_header])
                         for column_header in column_headers
                     ]))
-                ) for list_entry in list_input]))
+                    for list_entry in list_input
+                ]))
             )
             return '%s%s%s</table>' %(self.table_init_markup, header, body)
 
-            # converted_output += self.table_init_markup
-            # converted_output += '<thead>'
-            # converted_output += '<tr><th>' + '</th><th>'.join(column_headers) + '</th></tr>'
-            # converted_output += '</thead>'
-            # converted_output += '<tbody>'
-            # for list_entry in list_input:
-            #     converted_output += '<tr><td>'
-            #     converted_output += '</td><td>'.join([self.convert_json_node(list_entry[column_header]) for column_header in
-            #                                          column_headers])
-            #     converted_output += '</td></tr>'
-            # converted_output += '</tbody>'
-            # converted_output += '</table>'
-            # return converted_output
-
-        #so you don't want or need clubbing eh? This makes @muellermichel very sad... ;(
-        #alright, let's fall back to a basic list here...
-        converted_output = '<ul><li>'
-        converted_output += '</li><li>'.join([self.convert_json_node(child) for child in list_input])
-        converted_output += '</li></ul>'
-        return converted_output
+        #no clubbing required here - columnb headers are not consistent across list
+        return '<ul><li>%s</li></ul>' %(
+            '</li><li>'.join([self.convert_json_node(child) for child in list_input])
+        )
 
     def convert_object(self, json_input):
         """
