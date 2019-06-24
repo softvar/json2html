@@ -17,7 +17,7 @@ LICENSE: MIT
 --------
 """
 
-import sys, cgi
+import sys
 
 if sys.version_info[:2] < (2, 7):
     from ordereddict import OrderedDict
@@ -27,11 +27,14 @@ else:
     import json as json_parser
 
 if sys.version_info[:2] < (3, 0):
+    from cgi import escape as html_escape
     text = unicode
     text_types = (unicode, str)
 else:
+    from html import escape as html_escape
     text = str
     text_types = (str,)
+
 
 class Json2Html:
     def convert(self, json="", table_attributes='border="1"', clubbing=True, encode=False, escape=True):
@@ -93,7 +96,7 @@ class Json2Html:
         """
         if type(json_input) in text_types:
             if self.escape:
-                return cgi.escape(text(json_input))
+                return html_escape(text(json_input))
             else:
                 return text(json_input)
         if hasattr(json_input, 'items'):
