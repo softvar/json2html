@@ -13,6 +13,7 @@ setup(
     download_url = 'https://github.com/softvar/json2html/tarball/1.3.0',
     keywords = ['json', 'HTML', 'Table'],
     license = 'MIT',
+    python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*',
     classifiers = (
     ),
 )
