@@ -203,7 +203,7 @@ Tests
 	cd test/
 	python run_tests.py
 
-Tested with Python 2.6, 2.7 3.4, and 3.5.
+Tested with Python 2.7 and 3.5+.
 
 Contributors
 ------------

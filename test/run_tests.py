@@ -52,11 +52,10 @@ class TestJson2Html(unittest.TestCase):
         )
 
     def test_invalid_json_exception(self, *args, **kwargs):
-        if sys.version_info[:2] >= (2, 7): #Python below 2.7 doesn't have assertRaises, ommitting these tests
-            _json = "{'name'}"
-            with self.assertRaises(ValueError) as context:
-                json2html.convert(json = _json)
-            self.assertIn('Expecting property name', str(context.exception))
+        _json = "{'name'}"
+        with self.assertRaises(ValueError) as context:
+            json2html.convert(json = _json)
+        self.assertIn('Expecting property name', str(context.exception))
 
     def test_funky_objects(self):
         class objecty_class1(object):

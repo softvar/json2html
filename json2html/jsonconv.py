@@ -19,12 +19,8 @@ LICENSE: MIT
 
 import sys
 
-if sys.version_info[:2] < (2, 7):
-    from ordereddict import OrderedDict
-    import simplejson as json_parser
-else:
-    from collections import OrderedDict
-    import json as json_parser
+from collections import OrderedDict
+import json as json_parser
 
 if sys.version_info[:2] < (3, 0):
     from cgi import escape as html_escape
