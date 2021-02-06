@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+cd test/;
+python run_tests.py;
