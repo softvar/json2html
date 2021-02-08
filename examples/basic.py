@@ -7,8 +7,8 @@ from json2html import *
 
 _json = {
     "name": "Json2Html",
-    "desription": "converts json 2 html table format"
+    "description": "converts json 2 html table format"
 }
 
 output = json2html.convert(json = _json)
-print output
+print(output)

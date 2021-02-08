@@ -29,4 +29,4 @@ _json = {
 }
 
 output = json2html.convert(json = _json)
-print output
+print(output)

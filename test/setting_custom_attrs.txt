@@ -8,7 +8,7 @@
 		<td>python</td>
 	</tr>
 	<tr>
-		<th>desription</th>
+		<th>description</th>
 		<td>converts json 2 html table format</td>
 	</tr>
 </table>
