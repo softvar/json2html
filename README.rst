@@ -83,7 +83,7 @@ Example Usage
 
 Output:
 
-.. code-block:: bash
+.. code-block:: html
 
 	<table border="1"><tr><th>name</th><td>json2html</td></tr><tr><th>description</th><td>converts JSON to HTML tabular representation</td></tr></table>
 
@@ -106,7 +106,7 @@ description  Converts JSON to HTML tabular representation
 
 Output:
 
-.. code-block:: bash
+.. code-block:: html
 
 	<table id="info-table" class="table table-bordered table-hover"><tr><th>name</th><td>json2html</td></tr><tr><th>description</th><td>Converts JSON to HTML tabular representation</td></tr></table>
 
@@ -126,7 +126,7 @@ Output:
 
 Output:
 
-.. code-block:: bash
+.. code-block:: html
 
 	<table border="1"><tr><th>sample</th><td><table border="1"><thead><tr><th>b</th><th>c</th><th>a</th></tr></thead><tbody><tr><td>2</td><td>3</td><td>1</td></tr><tr><td>6</td><td>7</td><td>5</td></tr></tbody></table></td></tr></table>
 
@@ -154,9 +154,27 @@ Output:
 
 Output:
 
-.. code-block:: bash
+.. code-block:: html
 
 	<table border="1"><tr><th>sample</th><td><ul><li><table border="1"><tr><th>a</th><td>1</td></tr><tr><th>c</th><td>3</td></tr><tr><th>b</th><td>2</td></tr></table></li><li><table border="1"><tr><th>1b1</th><td>6</td></tr><tr><th>c</th><td>7</td></tr><tr><th>1a1</th><td>5</td></tr></table></li></ul></td></tr></table>
+
++-----------------------------------+-----------------------------------+
+| sample                            | -                                 |
+|                                   |                                   |
+|                                   |    = =                            |
+|                                   |    a 1                            |
+|                                   |    c 3                            |
+|                                   |    b 2                            |
+|                                   |    = =                            |
+|                                   |                                   |
+|                                   | -                                 |
+|                                   |                                   |
+|                                   |    === =                          |
+|                                   |    1b1 6                          |
+|                                   |    c   7                          |
+|                                   |    1a1 5                          |
+|                                   |    === =                          |
++-----------------------------------+-----------------------------------+
 
 **Example 5:** [Source: `json.org/example <http://json.org/example>`_]
 
@@ -191,7 +209,7 @@ Output:
 
 Output:
 
-.. code-block:: bash
+.. code-block:: html
 
 	<table border="1"><tr><th>glossary</th><td><table border="1"><tr><th>GlossDiv</th><td><table border="1"><tr><th>GlossList</th><td><table border="1"><tr><th>GlossEntry</th><td><table border="1"><tr><th>GlossDef</th><td><table border="1"><tr><th>GlossSeeAlso</th><td><ul><li>GML</li><li>XML</li></ul></td></tr><tr><th>para</th><td>A meta-markup language, used to create markup languages such as DocBook.</td></tr></table></td></tr><tr><th>GlossSee</th><td>markup</td></tr><tr><th>Acronym</th><td>SGML</td></tr><tr><th>GlossTerm</th><td>Standard Generalized Markup Language</td></tr><tr><th>Abbrev</th><td>ISO 8879:1986</td></tr><tr><th>SortAs</th><td>SGML</td></tr><tr><th>ID</th><td>SGML</td></tr></table></td></tr></table></td></tr><tr><th>title</th><td>S</td></tr></table></td></tr><tr><th>title</th><td>example glossary</td></tr></table></td></tr></table>
 
