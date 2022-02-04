@@ -12,4 +12,4 @@ _json = {
 }
 
 output = json2html.convert(json = _json, table_attributes="class=\"table table-bordered table-hover\"")
-print output
+print (output)
