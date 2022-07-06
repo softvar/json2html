@@ -4,7 +4,9 @@ python:
   - "3.5"
   - "3.6"
   - "3.7"
-  - "3.8-dev"
+  - "3.8"
+  - "3.9"
+  - "3.10-dev"
 
 # command to run tests
 script: cd test/ && python run_tests.py
