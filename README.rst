@@ -56,6 +56,8 @@ Argument              Description
 `encode`              turn on/off[default] encoding of result to escaped html, compatible with any browser
 --------------------- ----------------
 `escape`              turn on[default]/off escaping of html tags in text nodes (prevents XSS attacks in case you pass untrusted data to json2html)
+--------------------- ----------------
+`multiline`           turn on/off[default] using HTML line breaks in multiline text nodes
 ===================== ================
 
 Installation

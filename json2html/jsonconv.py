@@ -33,7 +33,7 @@ else:
 
 
 class Json2Html:
-    def convert(self, json="", table_attributes='border="1"', clubbing=True, encode=False, escape=True):
+    def convert(self, json="", table_attributes='border="1"', clubbing=True, encode=False, escape=True, multiline=False):
         """
             Convert JSON to HTML Table format
         """
@@ -42,6 +42,7 @@ class Json2Html:
         self.table_init_markup = "<table %s>" % table_attributes
         self.clubbing = clubbing
         self.escape = escape
+        self.multiline = multiline
         json_input = None
         if not json:
             json_input = {}
@@ -91,10 +92,12 @@ class Json2Html:
             basic JSON types.
         """
         if type(json_input) in text_types:
+            html_output = text(json_input)
             if self.escape:
-                return html_escape(text(json_input))
-            else:
-                return text(json_input)
+                html_output = html_escape(html_output)
+            if self.multiline:
+                html_output = html_output.replace("\n", "<br/>")
+            return html_output
         if hasattr(json_input, 'items'):
             return self.convert_object(json_input)
         if hasattr(json_input, '__iter__') and hasattr(json_input, '__getitem__'):

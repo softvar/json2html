@@ -197,6 +197,16 @@ class TestJson2Html(unittest.TestCase):
             u"<script></script>"
         )
 
+    def test_multiline(self):
+        self.assertEqual(
+            json2html.convert("a\nb"),
+            u"a\nb"
+        )
+        self.assertEqual(
+            json2html.convert("a\nb", multiline=True),
+            u"a<br/>b"
+        )
+
     def test_all(self):
         for test_definition in self.test_json:
             _json = test_definition['json']
