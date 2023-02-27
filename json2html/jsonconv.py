@@ -174,3 +174,15 @@ class Json2Html:
         return converted_output
 
 json2html = Json2Html()
+
+def main():
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('infile', nargs='?', type=argparse.FileType('r'),
+                        default=sys.stdin)
+    args = parser.parse_args()
+    data = args.infile.read()
+    print(json2html.convert(json = data))
+
+if __name__ == "__main__":
+    main()

@@ -23,4 +23,7 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: Implementation :: CPython',
     ],
+    entry_points = {
+        'console_scripts': ['json2html = json2html:main']
+    }
 )
