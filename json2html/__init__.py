@@ -1,6 +1,6 @@
 '''
 python wrapper for JSON to HTML-Table convertor
-(c) 2013-2021 Varun Malhotra. MIT License
+(c) 2013-2024 Varun Malhotra. MIT License
 '''
 
 from .jsonconv import *

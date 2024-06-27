@@ -4,7 +4,7 @@
 JSON 2 HTML Converter
 =====================
 
-(c) Varun Malhotra 2013-2021
+(c) Varun Malhotra 2013-2024
 Source Code: https://github.com/softvar/json2html
 
 
