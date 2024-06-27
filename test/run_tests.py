@@ -135,12 +135,14 @@ class TestJson2Html(unittest.TestCase):
             u'<table border="1"><thead><tr><th>one</th><th>two</th></tr></thead><tbody><tr><td><ul><li>1</li><li>2</li></ul></td><td>blübi</td></tr></tbody></table>'
         )
         #clubbed with two elements
+        converted = json2html.convert([
+            binary_dict([1, 2], u"blübi"),
+            binary_dict("foo", "bar")
+        ])
         self.assertEqual(
-            json2html.convert([
-                binary_dict([1, 2], u"blübi"),
-                binary_dict("foo", "bar")
-            ]),
-            u'<table border="1"><thead><tr><th>one</th><th>two</th></tr></thead><tbody><tr><td><ul><li>1</li><li>2</li></ul></td><td>blübi</td></tr><tr><td>foo</td><td>bar</td></tr></tbody></table>'
+            converted,
+            u'<table border="1"><thead><tr><th>one</th><th>two</th></tr></thead><tbody><tr><td><ul><li>1</li><li>2</li></ul></td><td>blübi</td></tr><tr><td>foo</td><td>bar</td></tr></tbody></table>',
+            converted
         )
         #not clubbed, second element has different keys
         self.assertEqual(
