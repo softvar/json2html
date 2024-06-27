@@ -2,7 +2,7 @@
 
 Python module to convert `JSON` into a human readable `HTML Table` representation.
 
-![Latest Version](https://img.shields.io/pypi/v/json2html.svg) ![Downloads](https://img.shields.io/pypi/dm/json2html.svg) [![CI](https://github.com/softvar/json2html/workflows/CI/badge.svg?branch=master)](https://github.com/softvar/json2html/actions?query=workflow%3ACI)
+![Latest Version](https://img.shields.io/pypi/v/json2html.svg) ![Downloads](https://img.shields.io/pypi/dm/json2html.svg) [![CI](https://github.com/softvar/json2html/workflows/CI/badge.svg?branch=master)](https://github.com/softvar/json2html/actions?query=workflow%3ACI) [![codecov](https://codecov.io/gh/softvar/json2html/branch/master/graph/badge.svg?token=)](https://codecov.io/gh/softvar/json2html)
 
 ## Features
 
